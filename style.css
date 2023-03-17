@@ -1,0 +1,105 @@
+* {
+    font-family: 'Montserrat', sans-serif;
+    /* font-weight: 500; */
+    background-color: #dbedff;
+}
+
+h1 {
+    font-weight: 600;
+    text-align: center;
+    font-size: 40px;
+    margin: 60px 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.header__item {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+
+
+a.header__item {
+    text-decoration: none;
+    color: black;
+}
+
+a.header__item:hover {
+    color: grey;
+}
+
+.button {
+    background: rgb(31, 102, 255);
+    padding: 14px;
+    font-weight: 500;
+    color: white;
+    font-size: 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.text {
+    font-size: 18px;
+    text-align: justify;
+}
+
+.main-content {
+    display: flex;
+    margin-left: 50px;
+    gap: 400px;
+}
+
+.main-text {
+    width: 800px;
+    text-align: center;
+
+}
+
+.registration {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -125px 0 0 -125px;
+    text-align: justify;
+}
+
+.autorisation {
+    width: 100px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input {
+	width: 300px;
+	font-size: 13px;
+	padding: 6px 0 4px 10px;
+	border: 1px solid #838383;
+	background: #F6F6f6;
+	border-radius: 8px;
+    margin-top: 8px;
+}
+
+.button-submit {
+    padding: 10px;
+    font-size: 15px;
+    width: 100px;
+    cursor: pointer;
+    background-color: gray;
+}
+
+div.footer 
+{
+    width:1500px;
+    height:70px; 
+    background-color:#187dd1; 
+    clear:both
+}

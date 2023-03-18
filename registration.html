@@ -1,41 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header class="header">
-        <a class="header__item" href="index.html">Вернуться</a>
-        <a class="header__item" href="#">Партнеры</a>
-        <a class="header__item" href="#">Информация</a>
-        <a class="header__item" href="#">Личный кабинет</a>
-    </header>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Signin Template · Bootstrap v5.1</title> 
 
-    <h1>Регистрация</h1>
+    <!-- Bootstrap core CSS -->
+<link href="bootstrap.min.css" rel="stylesheet">
 
-    <div class="main-content">
-        <div class="registration">
-            <h3>Регистрация</h3>
-            <form action="#">
-                <div class="form-group">
-                    <label for="email">Почта</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" required>
-                </div>
-                <input type="submit" class="button-submit"value="Войти">
-            </form>
-        </div>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form>
+    <img class="mb-4" src="logo.jpg" alt="" width=50% height=50%>
+    <h1 class="h3 mb-3 fw-normal">Регистрация на хакатон</h1>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Адрес электронной почты</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Пароль</label>
     </div>
 
-        
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Запомнить меня
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+    <p class="mt-5 mb-3 text-muted">NordHack</p>
+  </form>
+</main>
 
-</body>
+
+    
+  </body>
 </html>

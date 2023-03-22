@@ -1,0 +1,42 @@
+{% extends 'hackaton/layout.html' %}
+{% load static %}
+{% block main %}
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'hackaton/style.css' %}" rel="stylesheet">
+  <body class="d-flex h-100 text-center text-white bg-primary ">
+    
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">NordHack-2019</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link active" aria-current="page" href="#">Главная страница</a>
+       {% if not request.user.is_authenticated %}
+           <a class="nav-link" href="{% url 'hackaton:registration' %}">Регистрация</a>
+        {% else %}
+          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+        {% endif %}
+        <a class="nav-link" href="#">Партнеры</a>
+        <a class="nav-link" href="#">Информация</a>
+        <a class="nav-link" href="{% url 'users:index' %}">Личный кабинет</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3">
+    <h1>Большой северный хакатон «NordHack»</h1>
+    <p class="lead">Кафедра математики, физики и информационных технологий приглашает всех желающих принять участие в региональном состязательном мероприятии «Большой северный хакатон NordHack» (БСХ NordHack-2019), который будет проходить на базе факультета математических и естественных наук ФГБОУ ВО «МАГУ» с 20 по 22 ноября.</p>
+    <p class="lead">
+      <a href="{% url 'hackaton:registration' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Зарегистрироваться</a>
+    </p>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p>Мурманский Арктический государственный университет 2023</p>
+  </footer>
+</div>    
+  </body>
+{% endblock %}
+

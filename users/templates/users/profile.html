@@ -1,0 +1,44 @@
+{% extends 'hackaton/layout.html' %}
+{% load static %}
+
+    {% block main %}
+     <!-- Custom styles for this template -->
+    <link href="{% static 'hackaton/style.css' %}" rel="stylesheet">
+  <body class="d-flex h-100 text-center text-white bg-primary ">
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">NordHack-2019</h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link" aria-current="page" href="{% url 'hackaton:index' %}">Главная страница</a>
+       {% if not request.user.is_authenticated %}
+           <a class="nav-link" href="{% url 'hackaton:registration' %}">Регистрация</a>
+        {% else %}
+          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+        {% endif %}
+        <a class="nav-link" href="#">Партнеры</a>
+        <a class="nav-link" href="#">Информация</a>
+        <a class="nav-link active" href="{% url 'users:index' %}">Личный кабинет</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3">
+    <h1>Личный Кабинет {{ user.username }}</h1>
+      <p>{{ user.email }}</p>
+      <p>{{ user.first_name }}</p>
+      <p>{{ user.last_name }}</p>
+      <p>{{ message }}</p>
+    <p class="lead">Здесь должна быть какая-то информация о пользователе<p class="lead">
+      <a href="{% url 'users:add_command' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Создать команду</a>
+    </p>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p>Мурманский Арктический государственный университет 2023</p>
+  </footer>
+</div>
+  </body>
+
+    {% endblock %}

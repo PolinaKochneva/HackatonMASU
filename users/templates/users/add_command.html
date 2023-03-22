@@ -1,0 +1,41 @@
+{% extends 'hackaton/layout.html' %}
+{% load static %}
+{% block main %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'hackaton/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form>
+    <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
+    <h1 class="h3 mb-3 fw-normal">Создание команды</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingName" placeholder="command name">
+      <label for="floatingInput">Название команды(необязательно)</label>
+    </div>
+
+    <div class="form-floating">
+      <input type="integer" class="form-control" name="countUsers" id="floatingInput" placeholder="count">
+      <label for="floatingInput">Кол-во участников</label>
+    </div>
+
+    {% for i in countUsers %}
+      <div class="form-floating">
+        <input type="integer" class="form-control" name="user" id="floatingUser" placeholder="id">
+        <label for="floatingInput">Кол-во участников</label>
+      </div>
+    {% endfor %}
+
+    <button class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
+    <button class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+    <p class="mt-5 mb-3 text-muted">NordHack</p>
+  </form>
+</main>
+
+
+
+  </body>
+{% endblock %}

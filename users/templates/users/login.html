@@ -1,0 +1,34 @@
+{% extends 'hackaton/layout.html' %}
+{% load static %}
+{% block main %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'hackaton/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+
+<main class="form-signin">
+  <form action="{% url 'users:login' %}" method="post">
+    <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
+    <h1 class="h3 mb-3 fw-normal">Регистрация на хакатон</h1>
+    {% csrf_token %}
+      <p>{{ message }}</p>
+    <div class="form-floating">
+      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Имя пользователя</label>
+    </div>
+    <div class="form-floating">
+      <input type="password"  name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Пароль</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Запомнить меня
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+    <p class="mt-5 mb-3 text-muted">NordHack</p>
+  </form>
+</main>
+  </body>
+{% endblock %}

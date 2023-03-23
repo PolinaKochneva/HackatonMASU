@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Мар 23 2023 г., 08:15
+-- Время создания: Мар 23 2023 г., 10:57
 -- Версия сервера: 10.5.18-MariaDB-0+deb11u1
 -- Версия PHP: 7.4.33
 
@@ -36,7 +36,7 @@ CREATE TABLE `Invited_organizations` (
   `Электронная почта организации` varchar(45) DEFAULT NULL,
   `Тема письма` varchar(45) NOT NULL,
   `Дата отправки письма` date NOT NULL,
-  `Участник (Да/Нет)` tinyint(4) DEFAULT NULL
+  `Участник (Да/Нет)` tinyint(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -138,7 +138,8 @@ CREATE TABLE `Representatives_organizations` (
 CREATE TABLE `Tasks` (
   `Номер задачи` int(11) NOT NULL,
   `Категория` varchar(45) NOT NULL,
-  `Номер организации_участника` int(11) NOT NULL
+  `Номер организации_участника` int(11) NOT NULL,
+  `Ссылка на текст задания` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Мар 23 2023 г., 08:00
+-- Время создания: Мар 23 2023 г., 08:15
 -- Версия сервера: 10.5.18-MariaDB-0+deb11u1
 -- Версия PHP: 7.4.33
 
@@ -20,6 +20,24 @@ SET time_zone = "+00:00";
 --
 -- База данных: `hackaton`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Invited_organizations`
+--
+
+CREATE TABLE `Invited_organizations` (
+  `Номер письма` int(11) NOT NULL,
+  `Название организации` varchar(45) NOT NULL,
+  `Фамилия руководителя` varchar(45) NOT NULL,
+  `Имя руководителя` varchar(45) NOT NULL,
+  `Отчество руководителя` varchar(45) NOT NULL,
+  `Электронная почта организации` varchar(45) DEFAULT NULL,
+  `Тема письма` varchar(45) NOT NULL,
+  `Дата отправки письма` date NOT NULL,
+  `Участник (Да/Нет)` tinyint(4) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +73,7 @@ CREATE TABLE `Participants` (
   `Электронная почта` varchar(45) NOT NULL,
   `Логин` varchar(45) NOT NULL,
   `Пароль` varchar(45) NOT NULL,
-  `Номер команды` int(11) NOT NULL
+  `Номер команды` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,28 +97,10 @@ CREATE TABLE `Participating_organizations` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `Problems_solution`
+-- Структура таблицы `Problem_solution`
 --
 
-CREATE TABLE `Problems_solution` (
-  `Номер письма` int(11) NOT NULL,
-  `Название организации` varchar(45) NOT NULL,
-  `Фамилия руководителя` varchar(45) NOT NULL,
-  `Имя руководителя` varchar(45) NOT NULL,
-  `Отчество руководителя` varchar(45) NOT NULL,
-  `Электронная почта организации` varchar(45) DEFAULT NULL,
-  `Тема письма` varchar(45) NOT NULL,
-  `Дата отправки письма` date NOT NULL,
-  `Участник (Да/Нет)` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `Problem_solution_estimates`
---
-
-CREATE TABLE `Problem_solution_estimates` (
+CREATE TABLE `Problem_solution` (
   `Порядок оценивания` int(11) NOT NULL,
   `Этап` varchar(45) NOT NULL,
   `Номер команды` int(11) NOT NULL,
@@ -150,13 +150,19 @@ CREATE TABLE `Tasks` (
 CREATE TABLE `Teams` (
   `Номер команды` int(11) NOT NULL,
   `Название команды` varchar(45) NOT NULL,
-  `Номер задачи` int(11) NOT NULL,
+  `Номер задачи` int(11) DEFAULT NULL,
   `Номер модератора` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `Invited_organizations`
+--
+ALTER TABLE `Invited_organizations`
+  ADD PRIMARY KEY (`Номер письма`);
 
 --
 -- Индексы таблицы `Moderators`
@@ -180,15 +186,9 @@ ALTER TABLE `Participating_organizations`
   ADD KEY `fk_Организации-участники_1_idx` (`Номер письма`);
 
 --
--- Индексы таблицы `Problems_solution`
+-- Индексы таблицы `Problem_solution`
 --
-ALTER TABLE `Problems_solution`
-  ADD PRIMARY KEY (`Номер письма`);
-
---
--- Индексы таблицы `Problem_solution_estimates`
---
-ALTER TABLE `Problem_solution_estimates`
+ALTER TABLE `Problem_solution`
   ADD PRIMARY KEY (`Порядок оценивания`),
   ADD UNIQUE KEY `index2` (`Номер команды`,`Номер задачи`),
   ADD KEY `fk_Оценки_решения_задач_1_idx` (`Номер задачи`);
@@ -230,12 +230,12 @@ ALTER TABLE `Participants`
 -- Ограничения внешнего ключа таблицы `Participating_organizations`
 --
 ALTER TABLE `Participating_organizations`
-  ADD CONSTRAINT `fk_Организации-участники_1` FOREIGN KEY (`Номер письма`) REFERENCES `Problems_solution` (`Номер письма`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_Организации-участники_1` FOREIGN KEY (`Номер письма`) REFERENCES `Invited_organizations` (`Номер письма`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `Problem_solution_estimates`
+-- Ограничения внешнего ключа таблицы `Problem_solution`
 --
-ALTER TABLE `Problem_solution_estimates`
+ALTER TABLE `Problem_solution`
   ADD CONSTRAINT `fk_Оценки_решения_задач_1` FOREIGN KEY (`Номер задачи`) REFERENCES `Tasks` (`Номер задачи`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_Оценки_решения_задач_2` FOREIGN KEY (`Номер команды`) REFERENCES `Teams` (`Номер команды`) ON DELETE CASCADE ON UPDATE CASCADE;
 

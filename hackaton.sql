@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Мар 23 2023 г., 10:57
+-- Время создания: Мар 23 2023 г., 12:13
 -- Версия сервера: 10.5.18-MariaDB-0+deb11u1
 -- Версия PHP: 7.4.33
 
@@ -176,6 +176,7 @@ ALTER TABLE `Moderators`
 --
 ALTER TABLE `Participants`
   ADD PRIMARY KEY (`ID Участника`),
+  ADD UNIQUE KEY `Unique1` (`Электронная почта`,`Логин`),
   ADD KEY `fk_Участники_1` (`Номер команды`);
 
 --

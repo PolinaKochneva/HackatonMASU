@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Мар 23 2023 г., 12:13
+-- Время создания: Мар 24 2023 г., 09:58
 -- Версия сервера: 10.5.18-MariaDB-0+deb11u1
 -- Версия PHP: 7.4.33
 
@@ -32,7 +32,7 @@ CREATE TABLE `Invited_organizations` (
   `Название организации` varchar(45) NOT NULL,
   `Фамилия руководителя` varchar(45) NOT NULL,
   `Имя руководителя` varchar(45) NOT NULL,
-  `Отчество руководителя` varchar(45) NOT NULL,
+  `Отчество руководителя` varchar(45) DEFAULT NULL,
   `Электронная почта организации` varchar(45) DEFAULT NULL,
   `Тема письма` varchar(45) NOT NULL,
   `Дата отправки письма` date NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE `Moderators` (
   `ID Модератора` int(11) NOT NULL,
   `Фамилия модератора` varchar(45) NOT NULL,
   `Имя модератора` varchar(45) NOT NULL,
-  `Отчество модератора` varchar(45) NOT NULL,
+  `Отчество модератора` varchar(45) DEFAULT NULL,
   `Электронная почта` varchar(45) NOT NULL,
   `Логин` varchar(45) NOT NULL,
   `Пароль` varchar(45) NOT NULL,
-  `Номер телефона` char(10) NOT NULL
+  `Номер телефона` char(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -64,10 +64,10 @@ CREATE TABLE `Moderators` (
 
 CREATE TABLE `Participants` (
   `ID Участника` int(11) NOT NULL,
-  `Фамилия участника` varchar(45) NOT NULL,
-  `Имя участника` varchar(45) NOT NULL,
-  `Отчество участника` varchar(45) NOT NULL,
-  `Дата рождения` date NOT NULL,
+  `Фамилия участника` varchar(45) DEFAULT NULL,
+  `Имя участника` varchar(45) DEFAULT NULL,
+  `Отчество участника` varchar(45) DEFAULT NULL,
+  `Дата рождения` date DEFAULT NULL,
   `Место обучения` varchar(45) DEFAULT NULL,
   `Место работы` varchar(45) DEFAULT NULL,
   `Электронная почта` varchar(45) NOT NULL,
@@ -87,8 +87,8 @@ CREATE TABLE `Participating_organizations` (
   `Название организации` varchar(45) NOT NULL,
   `Фамилия руководителя` varchar(45) NOT NULL,
   `Имя руководителя` varchar(45) NOT NULL,
-  `Отчество руководителя` varchar(45) NOT NULL,
-  `Электронная почта организации` varchar(45) NOT NULL,
+  `Отчество руководителя` varchar(45) DEFAULT NULL,
+  `Электронная почта организации` varchar(45) DEFAULT NULL,
   `Ссылка на сайт организации` varchar(45) DEFAULT NULL,
   `Номер письма` int(11) NOT NULL,
   `Что может предоставить` varchar(45) DEFAULT NULL
@@ -122,7 +122,7 @@ CREATE TABLE `Representatives_organizations` (
   `ID Представителя организации` int(11) NOT NULL,
   `Фамилия представителя организации` varchar(45) NOT NULL,
   `Имя представителя организации` varchar(45) NOT NULL,
-  `Отчество представителя организации` varchar(45) NOT NULL,
+  `Отчество представителя организации` varchar(45) DEFAULT NULL,
   `Электронная почта представителя организации` varchar(45) NOT NULL,
   `Номер организации` int(11) NOT NULL,
   `Должность` varchar(45) DEFAULT NULL,
@@ -163,13 +163,15 @@ CREATE TABLE `Teams` (
 -- Индексы таблицы `Invited_organizations`
 --
 ALTER TABLE `Invited_organizations`
-  ADD PRIMARY KEY (`Номер письма`);
+  ADD PRIMARY KEY (`Номер письма`),
+  ADD UNIQUE KEY `Unique1` (`Название организации`,`Электронная почта организации`);
 
 --
 -- Индексы таблицы `Moderators`
 --
 ALTER TABLE `Moderators`
-  ADD PRIMARY KEY (`ID Модератора`);
+  ADD PRIMARY KEY (`ID Модератора`),
+  ADD UNIQUE KEY `Unique1` (`Электронная почта`,`Логин`,`Номер телефона`);
 
 --
 -- Индексы таблицы `Participants`
@@ -185,6 +187,7 @@ ALTER TABLE `Participants`
 ALTER TABLE `Participating_organizations`
   ADD PRIMARY KEY (`Номер организации_участника`),
   ADD UNIQUE KEY `Номер письма_UNIQUE` (`Номер письма`),
+  ADD UNIQUE KEY `Unique1` (`Электронная почта организации`,`Ссылка на сайт организации`,`Название организации`),
   ADD KEY `fk_Организации-участники_1_idx` (`Номер письма`);
 
 --
@@ -200,6 +203,7 @@ ALTER TABLE `Problem_solution`
 --
 ALTER TABLE `Representatives_organizations`
   ADD PRIMARY KEY (`ID Представителя организации`),
+  ADD UNIQUE KEY `Unique1` (`Электронная почта представителя организации`),
   ADD KEY `fk_Представители_организаций_1` (`Номер организации`);
 
 --
@@ -215,6 +219,7 @@ ALTER TABLE `Tasks`
 --
 ALTER TABLE `Teams`
   ADD PRIMARY KEY (`Номер команды`),
+  ADD UNIQUE KEY `Unique1` (`Название команды`),
   ADD KEY `index2` (`Номер модератора`,`Номер задачи`),
   ADD KEY `fk_Команды_2_idx` (`Номер задачи`);
 

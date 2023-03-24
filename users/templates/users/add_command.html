@@ -7,32 +7,70 @@
   <body class="text-center">
     
 <main class="form-signin">
-  <form>
+  <div>
     <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
     <h1 class="h3 mb-3 fw-normal">Создание команды</h1>
+  </div>
 
+  <form id="form-container" action="{% url 'users:command' %}" method="post">
+    {% csrf_token %}
     <div class="form-floating">
       <input type="text" class="form-control" id="floatingName" placeholder="command name">
-      <label for="floatingInput">Название команды(необязательно)</label>
+      <label for="floatingName">Название команды(необязательно)</label>
     </div>
 
-    <div class="form-floating">
-      <input type="integer" class="form-control" name="countUsers" id="floatingInput" placeholder="count">
-      <label for="floatingInput">Кол-во участников</label>
+    <div class="form-floating" id="form-nick">
+      <input type="text" class="form-control" name="name-0" id="form-name-0" placeholder="count">
+      <label for="form-name-0">nickname участника</label>
     </div>
 
-    {% for i in countUsers %}
-      <div class="form-floating">
-        <input type="integer" class="form-control" name="user" id="floatingUser" placeholder="id">
-        <label for="floatingInput">Кол-во участников</label>
-      </div>
-    {% endfor %}
+    <div>
+      <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
+    </div>
 
-    <button class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
-    <button class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
+    <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
+    <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
     <p class="mt-5 mb-3 text-muted">NordHack</p>
   </form>
+   <script>
+        let nickForm = document.querySelectorAll("#form-nick")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let delButton = document.querySelector("#del-form")
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+        let formNum = nickForm.length-1
+
+        addButton.addEventListener('click', addForm)
+        delButton.addEventListener('click', delForm)
+
+        function addForm(e){
+           e.preventDefault()
+
+            if (totalForms.getAttribute('value') < 4){
+                let newForm = nickForm[0].cloneNode(true)
+                let formRegex = RegExp(`name-(\\d){1}`,'g')
+
+                formNum++
+                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name-${formNum}`)
+                container.insertBefore(newForm, addButton)
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+
+        function delForm(e){+
+            e.preventDefault()
+
+            if (totalForms.getAttribute('value') > 1){
+                let form = document.querySelector(`#form-name-${formNum}`)
+                let form1 = document.querySelector(`#form-name-${formNum}`)
+                form.parentElement.remove()
+                form1.parentElement.remove()
+                formNum--
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+    </script>
 </main>
 
 

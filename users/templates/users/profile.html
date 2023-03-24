@@ -32,6 +32,7 @@
       <p>{{ message }}</p>
     <p class="lead">Здесь должна быть какая-то информация о пользователе<p class="lead">
       <a href="{% url 'users:add_command' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Создать команду</a>
+      <a href="{% url 'users:delete_user' %}" class="btn btn-lg btn-secondary fw-bold border-danger bg-danger text-white">Удалить себя</a>
     </p>
   </main>
 

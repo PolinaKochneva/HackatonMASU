@@ -10,7 +10,7 @@
   <form action="{% url 'users:registration' %}" method="post">
     <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
     <h1 class="h3 mb-3 fw-normal">Регистрация на хакатон</h1>
-        {% csrf_token %}
+    {% csrf_token %}
       <p>{{ message }}</p>
     <div class="form-floating">
       <input type="text" name="username" class="form-control" id="floatingName" placeholder="name">

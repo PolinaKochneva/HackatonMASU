@@ -8,7 +8,7 @@
 
 <main class="form-signin">
   <form action="{% url 'users:login' %}" method="post">
-    <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
+    <img class="mb-4" src="{% static 'hackaton/logo.jpg' %}" alt="" width=50% height=50%>
     <h1 class="h3 mb-3 fw-normal">Регистрация на хакатон</h1>
     {% csrf_token %}
       <p>{{ message }}</p>

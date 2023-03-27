@@ -1,34 +1,50 @@
 {% extends 'hackaton/layout.html' %}
 {% load static %}
 {% block main %}
-    <!-- Custom styles for this template -->
-    <link href="{% static 'hackaton/signin.css' %}" rel="stylesheet">
-  </head>
-  <body class="text-center">
+    <!-- Start Breadcrumbs -->
+   <div class="breadcrumbs">
+       <div class="container">
+           <div class="row align-items-center">
+               <div class="col-lg-8 offset-lg-2 col-md-12 col-12">
+                   <div class="breadcrumbs-content">
+                       <h1 class="page-title">Регистрация</h1>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- End Breadcrumbs -->
 
-<main class="form-signin">
-  <form action="{% url 'users:login' %}" method="post">
-    <img class="mb-4" src="{% static 'hackaton/logo.jpg' %}" alt="" width=50% height=50%>
-    <h1 class="h3 mb-3 fw-normal">Регистрация на хакатон</h1>
-    {% csrf_token %}
+   <!--Start Form-->
+   <div class="main-content text-dark">
+   <main class="form-signin">
+    <div class="container">
+        <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
       <p>{{ message }}</p>
-    <div class="form-floating">
-      <input type="text" name="username" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Имя пользователя</label>
-    </div>
-    <div class="form-floating">
-      <input type="password"  name="password" class="form-control" id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Пароль</label>
-    </div>
+        <div class="form-floating">
+          <input type="text" name="username" class="form-control" id="floatingName" placeholder="name">
+          <label for="floatingName">Имя пользователя</label>
+        </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Запомнить меня
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
-    <p class="mt-5 mb-3 text-muted">NordHack</p>
-  </form>
-</main>
-  </body>
+<!--      <div class="form-floating">-->
+<!--        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">-->
+<!--        <label for="floatingInput">Адрес электронной почты</label>-->
+<!--      </div>-->
+      <div class="form-floating">
+        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Пароль</label>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Запомнить меня
+        </label>
+      </div>
+      <div class="text-center">
+      <button class="w-150 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button></div>
+    </form>
+  </div>
+  </main> </div>
+  <!--End Form-->
 {% endblock %}

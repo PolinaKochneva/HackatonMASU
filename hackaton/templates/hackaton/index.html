@@ -3,40 +3,105 @@
 {% block main %}
 
 
-    <!-- Custom styles for this template -->
-    <link href="{% static 'hackaton/style.css' %}" rel="stylesheet">
-  <body class="d-flex h-100 text-center text-white bg-primary ">
-    
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">NordHack-2019</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Главная страница</a>
-       {% if not request.user.is_authenticated %}
-           <a class="nav-link" href="{% url 'hackaton:registration' %}">Регистрация</a>
-        {% else %}
-          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
-        {% endif %}
-        <a class="nav-link" href="#">Партнеры</a>
-        <a class="nav-link" href="#">Информация</a>
-        <a class="nav-link" href="{% url 'users:index' %}">Личный кабинет</a>
-      </nav>
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="main__circle"></div>
+    <div class="main__circle2"></div>
+    <div class="main__circle3"></div>
+    <div class="main__circle4"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+                <div class="hero-content">
+                    <h5 class="wow zoomIn" data-wow-delay=".2s">
+                        <i class="lni lni-map-marker"></i><a href="https://yandex.ru/maps/-/CCUSzBDGHA">МАГУ,
+                        Мурманск</a>
+                    </h5>
+                    <h2 class="wow fadeInUp" data-wow-delay=".4s">Большой северный хакатон «NordHack»</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">
+                        Кафедра математики, физики и информационных технологий приглашает всех желающих принять участие в региональном состязательном мероприятии
+                        «Большой северный хакатон NordHack» (БСХ NordHack-2019), который будет проходить на базе факультета математических и естественных наук
+                        ФГБОУ ВО «МАГУ» с 20 по 22 ноября.
+                    </p>
+                    <div class="button wow fadeInUp" data-wow-delay=".8s">
+                        <a href="../../../users/templates/users/registration.html" class="btn ">Зарегистрироваться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
+</section>
+<!-- End Hero Area -->
 
-  <main class="px-3">
-    <h1>Большой северный хакатон «NordHack»</h1>
-    <p class="lead">Кафедра математики, физики и информационных технологий приглашает всех желающих принять участие в региональном состязательном мероприятии «Большой северный хакатон NordHack» (БСХ NordHack-2019), который будет проходить на базе факультета математических и естественных наук ФГБОУ ВО «МАГУ» с 20 по 22 ноября.</p>
-    <p class="lead">
-      <a href="{% url 'hackaton:registration' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Зарегистрироваться</a>
-    </p>
-  </main>
+<div class="main-content text-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
 
-  <footer class="mt-auto text-white-50">
-    <p>Мурманский Арктический государственный университет 2023</p>
-  </footer>
-</div>    
-  </body>
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                    <h3>КОГО МЫ ЖДЕМ</h3>
+                    <p>
+                        Обучающиеся школ города и области (класс и профиль не имеют значения) и студентов колледжей и вузов, простых IT-шников от компаний. Команда состоит из 3-4 человек.
+                        Можно собрать команду заранее, можно влиться в команду на месте.
+                    </p>
+                </div>
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                    <h3>КОГДА ЭТО БУДЕТ</h3>
+                    <p>
+                        С 20 по 22 ноября 2019 года — три дня душевного кодинга и решения практических задач с полным погружением в проблему.
+                    </p>
+                </div>
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                    <h3>ПРО ЧТО ЭТО БУДЕТ</h3>
+                    <p>
+                        Самые актуальные во все времена направления — умный город, большие данные, информационная безопасность, разработка компьютерной игры и визуализация данных (на выбор).
+                    </p>
+                </div>
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                    <h3>ЧЕМ МОЖНО ПОЛЬЗОВАТЬСЯ</h3>
+                    <p>
+                        Всем, что сможете принести — свой ноутбук, свой мобильный интернет, книги и прочие полезные полезности.
+                    </p>
+                </div>
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                    <h3>ГДЕ ЭТО БУДЕТ</h3>
+                    <p>
+                        Площадка Мурманского арктического государственного университета.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-1">
+            </div>
+
+            <div class="col">
+                <div class="main-img"><img class="center-pic" src="{% static 'hackaton/images/main.jpg' %}" alt="img"></div>
+                <div class="main-img"><img class="center-pic" src="{% static 'hackaton/images/main1.jpg' %}" alt="img"></div>
+                <div class="main-img"><img class="center-pic" src="{% static 'hackaton/images/main2.jpg' %}" alt="img"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 {% endblock %}
 

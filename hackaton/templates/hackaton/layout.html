@@ -5,33 +5,139 @@
     {% bootstrap_javascript %}
 <!doctype html>
 <html lang="en" class="h-100">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-
-    <title>Signin Template · Bootstrap v5.1</title>
+    <title>NordHack-2019</title>
 
     <!-- Bootstrap core CSS -->
+    <link href="{% static 'hackaton/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'hackaton/css/headers.css' %}" rel="stylesheet">
+
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
-      }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
     </style>
 
 
+    <!-- Custom styles for this template -->
+    <link href="{% static 'hackaton/css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'hackaton/css/LineIcons.3.0.css' %}" />
+    <link rel="stylesheet" href="{% static 'hackaton/css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static 'hackaton/css/tiny-slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'hackaton/css/glightbox.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'hackaton/css/main.css' %}" />
+</head>
+<!-- Start Header Area -->
+<header class="header navbar-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="nav-inner">
+                    <!-- Start Navbar -->
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="https://www.masu.edu.ru/">
+                            <img src="{% static 'hackaton/images/logo/logo.svg'%}" alt="Logo">
+                        </a>
+                        <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                            <span class="toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                            <ul id="nav" class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a href="{% url 'hackaton:index' %}"
+                                       {% if request.resolver_match.url_name == 'index' %}
+                                        class="active"
+                                       {% endif %}
+                                       aria-label="Toggle navigation">Главная страница</a>
+                                </li>
+                                {% if not request.user.is_authenticated %}
+                                <li class="nav-item">
+                                       <a href="{% url 'users:registration' %}"
+                                        {% if request.resolver_match.url_name == 'registration' %}
+                                            class="active"
+                                        {% endif %} aria-label="Toggle navigation">Регистрация</a>
+                                </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a href="{% url 'hackaton:partners' %}"
+                                       {% if request.resolver_match.url_name == 'partners' %}
+                                        class="active"
+                                       {% endif %}
+                                    aria-label="Toggle navigation">Партнеры</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'hackaton:info' %}"
+                                       {% if request.resolver_match.url_name == 'info' %}
+                                        class="active"
+                                       {% endif %}aria-label="Toggle navigation">Информация</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'users:profile' %}"
+                                       {% if request.resolver_match.url_name == 'profile' %}
+                                        class="active"
+                                       {% endif %}
+                                       aria-label="Toggle navigation">Личный кабинет</a>
+                                </li>
+                            </ul>
+                        </div> <!-- navbar collapse -->
+                        {% if request.resolver_match.url_name != 'registration' and not request.user.is_authenticated %}
+                        <div class="button">
+                            <a href="{% url 'users:registration' %}" class="btn">Зарегистрироваться<i class="lni lni-ticket"></i></a>
+                        </div>
+                        {% endif %}
+                    </nav>
+                    <!-- End Navbar -->
+                </div>
+            </div>
+        </div> <!-- row -->
+    </div> <!-- container -->
+</header>
+<!-- End Header Area -->
+
     {% block main %}
     {% endblock %}
+<!-- Start Footer -->
+<div class="container">
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="{% url 'hackaton:index' %}" class="nav-link px-4 text-muted">Главная страница</a></li>
+            <li class="nav-item"><a href="{% url 'users:registration' %}" class="nav-link px-4 text-muted">Регистрация</a></li>
+            <li class="nav-item"><a href="{% url 'hackaton:partners' %}" class="nav-link px-4 text-muted">Партнеры</a></li>
+            <li class="nav-item"><a href="{% url 'hackaton:info' %}" class="nav-link px-4 text-muted">Информация</a></li>
+            <li class="nav-item"><a href="{% url 'users:profile' %}" class="nav-link px-4 text-muted">Личный кабинет</a></li>
+            <li class="nav-item"><a href="polozhenie_nordhack.pdf" class="nav-link px-4 text-muted">Положение о соревновании</a></li>
+        </ul>
+        <p class="text-center text-muted">2023 Мурманский Арктический государственный университет</p>
+    </footer>
+</div>
+<!-- End Footer -->
+
+
+        <script src="{% static 'hackaton/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'hackaton/js/wow.min.js' %}"></script>
+        <script src="{% static 'hackaton/js/tiny-slider.js' %}"></script>
+        <script src="{% static 'hackaton/js/glightbox.min.js' %}"></script>
+        <script src="{% static 'hackaton/js/count-up.min.js' %}"></script>
+        <script src="{% static 'hackaton/js/main.js' %}"></script>
+        <script src="{% static 'hackaton/js/bootstrap.bundle.min.js' %}"></script>
+        </body>
 
 </html>

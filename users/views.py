@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from .forms import LoginForm, RegForm
 
 # Create your views here.
-def index(request):
+def profile(request):
     if not User.objects.filter(username=request.user.username):
         context = 'пользователь не существует'
     else:
@@ -28,7 +28,7 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                return  HttpResponseRedirect(reverse('users:index'))
+                return  HttpResponseRedirect(reverse('users:profile'))
             else:
                 return render(request, 'users/login.html', {
                     'message':'Неправильное имя пользователя или пароль',
@@ -67,11 +67,11 @@ def command(request):
                     return render(request, "users/profile.html", {
                     })
             else:
-                return render(request, "hackaton/registration.html", {
+                return render(request, "users/registration.html", {
                     'message': 'Пользователь существует',
                 })
 
-    return render(request, "hackaton/registration.html", {
+    return render(request, "users/registration.html", {
         'message': 'Invalid form',
     })
 
@@ -93,11 +93,11 @@ def register(request):
                     return render(request, "users/profile.html", {
                     })
             else:
-                return render(request, "hackaton/registration.html", {
+                return render(request, "users/registration.html", {
                     'message': 'Пользователь существует',
                 })
 
-    return render(request, "hackaton/registration.html", {
+    return render(request, "users/registration.html", {
         'message':'Invalid form',
     })
 

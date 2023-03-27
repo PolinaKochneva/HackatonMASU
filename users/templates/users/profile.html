@@ -2,44 +2,111 @@
 {% load static %}
 
     {% block main %}
-     <!-- Custom styles for this template -->
-    <link href="{% static 'hackaton/style.css' %}" rel="stylesheet">
-  <body class="d-flex h-100 text-center text-white bg-primary ">
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <h3 class="float-md-start mb-0">NordHack-2019</h3>
-      <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link" aria-current="page" href="{% url 'hackaton:index' %}">Главная страница</a>
-       {% if not request.user.is_authenticated %}
-           <a class="nav-link" href="{% url 'hackaton:registration' %}">Регистрация</a>
-        {% else %}
-          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
-        {% endif %}
-        <a class="nav-link" href="#">Партнеры</a>
-        <a class="nav-link" href="#">Информация</a>
-        <a class="nav-link active" href="{% url 'users:index' %}">Личный кабинет</a>
-      </nav>
+  <!-- Start Breadcrumbs -->
+<section class="hero-area">
+    <div class="main__circle"></div>
+    <div class="main__circle2"></div>
+    <div class="main__circle3"></div>
+    <div class="main__circle4"></div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+                <div class="hero-content">
+
+                    <h2 class="wow fadeInUp" data-wow-delay=".4s">Личный Кабинет {{ user.username }}</h2>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
+</section>
+   <!-- End Breadcrumbs -->
 
-  <main class="px-3">
-    <h1>Личный Кабинет {{ user.username }}</h1>
-      <p>{{ user.email }}</p>
-      <p>{{ user.first_name }}</p>
-      <p>{{ user.last_name }}</p>
-      <p>{{ message }}</p>
-    <p class="lead">Здесь должна быть какая-то информация о пользователе<p class="lead">
-      <a href="{% url 'users:add_command' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Создать команду</a>
-      <a href="{% url 'users:delete_user' %}" class="btn btn-lg btn-secondary fw-bold border-danger bg-danger text-white">Удалить себя</a>
-    </p>
-  </main>
 
-  <footer class="mt-auto text-white-50">
-    <p>Мурманский Арктический государственный университет 2023</p>
-  </footer>
-</div>
-  </body>
+
+
+<div class="main-content text-dark">
+   <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-4">Личный кабинет</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+          Обо мне
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          Команда
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Расписание
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          Задача
+        </a>
+      </li>
+        </ul>
+    <hr>
+  </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                            <h3>Имя</h3>
+                          <div class="form-floating">
+                            <input type="text" value="{{ user.first_name }}" class="form-control" id="floatingName" placeholder="name@example.com">
+                          </div>
+                            <h3>Фамилия</h3>
+                          <div class="form-floating">
+                            <input type="text" value="{{ user.last_name }}" class="form-control" id="floatingInput" placeholder="name@example.com">
+                          </div>
+                        <h3>Почта</h3>
+                        <form action="#">
+                          <div class="form-floating">
+                            <input type="email" value="{{ user.email }}" class="form-control" id="floatingMail" placeholder="name@example.com">
+                          </div>
+                </div>
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+                        <h3>Сообщение об ошибках(!удалить!)</h3>
+                          <p class="lead">{{ message }}</p>
+
+                </div>
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+                        <h3>О вас</h3>
+                          <p class="lead">Здесь должна быть какая-то информация о пользователе</p>
+                </div>
+
+
+                <p class="lead">
+                    <a href="{% url 'users:logout' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Выйти</a>
+                  <a href="{% url 'users:delete_user' %}" class="btn btn-lg btn-secondary fw-bold border-danger bg-danger text-white">Удалить себя</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
 
     {% endblock %}

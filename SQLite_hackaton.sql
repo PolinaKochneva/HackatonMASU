@@ -1,96 +1,96 @@
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS "Moderators" (
-	"ID Модератора"	INTEGER NOT NULL,
-	"Фамилия модератора"	TEXT NOT NULL,
-	"Имя модератора"	TEXT NOT NULL,
-	"Отчество модератора"	TEXT DEFAULT NULL,
-	"Электронная почта"	TEXT NOT NULL UNIQUE,
-	"Логин"	TEXT NOT NULL UNIQUE,
-	"Пароль"	TEXT NOT NULL,
-	"Номер телефона"	TEXT DEFAULT NULL UNIQUE,
-	PRIMARY KEY("ID Модератора" AUTOINCREMENT)
-);
 CREATE TABLE IF NOT EXISTS "Invited_organizations" (
-	"Номер письма"	INTEGER NOT NULL,
-	"Название организации"	TEXT NOT NULL UNIQUE,
-	"Фамилия руководителя"	TEXT NOT NULL,
-	"Имя руководителя"	TEXT NOT NULL,
-	"Отчество руководителя"	TEXT DEFAULT NULL,
-	"Электронная почта организации"	TEXT DEFAULT NULL UNIQUE,
-	"Тема письма"	TEXT NOT NULL,
-	"Дата отправки письма"	NUMERIC NOT NULL,
-	"Участник (Да/Нет)"	INTEGER DEFAULT NULL,
-	PRIMARY KEY("Номер письма" AUTOINCREMENT)
+	"Letter number"	INTEGER NOT NULL,
+	"Organization name"	varchar(100) NOT NULL UNIQUE,
+	"Manager surname"	varchar(100) NOT NULL,
+	"Manager name"	varchar(100) NOT NULL,
+	"Manager patronymic"	varchar(100),
+	"Organization email"	varchar(100) UNIQUE,
+	"Letter subject"	varchar(100) NOT NULL,
+	"Mailing day"	date NOT NULL,
+	"Participant (Yes/No)"	tinyint(3),
+	PRIMARY KEY("Letter number" AUTOINCREMENT)
 );
-CREATE TABLE IF NOT EXISTS "Participating_organizations" (
-	"Номер организации_участника"	INTEGER NOT NULL,
-	"Название организации"	TEXT NOT NULL UNIQUE,
-	"Фамилия руководителя"	TEXT NOT NULL,
-	"Имя руководителя"	TEXT NOT NULL,
-	"Отчество руководителя"	TEXT DEFAULT NULL,
-	"Электронная почта организации"	TEXT DEFAULT NULL UNIQUE,
-	"Ссылка на сайт организации"	TEXT DEFAULT NULL UNIQUE,
-	"Номер письма"	INTEGER NOT NULL UNIQUE,
-	"Что может предоставить"	TEXT DEFAULT NULL,
-	FOREIGN KEY("Номер письма") REFERENCES "Invited_organizations"("Номер письма") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("Номер организации_участника" AUTOINCREMENT)
+CREATE TABLE IF NOT EXISTS "Moderators" (
+	"Moderator ID"	INTEGER NOT NULL,
+	"Moderator surname"	varchar(100) NOT NULL,
+	"Moderator name"	varchar(100) NOT NULL,
+	"Moderator patronymic"	varchar(100),
+	"Moderator email"	varchar(100) NOT NULL UNIQUE,
+	"Login"	varchar(100) NOT NULL UNIQUE,
+	"Password"	varchar(100) NOT NULL,
+	"Phone number"	char(15) UNIQUE,
+	PRIMARY KEY("Moderator ID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "Participants" (
-	"ID Участника"	INTEGER NOT NULL,
-	"Фамилия участника"	TEXT DEFAULT NULL,
-	"Имя участника"	TEXT DEFAULT NULL,
-	"Отчество участника"	TEXT DEFAULT NULL,
-	"Дата рождения"	NUMERIC DEFAULT NULL,
-	"Место обучения"	TEXT DEFAULT NULL,
-	"Место работы"	TEXT DEFAULT NULL,
-	"Электронная почта"	TEXT NOT NULL UNIQUE,
-	"Логин"	TEXT NOT NULL UNIQUE,
-	"Пароль"	TEXT NOT NULL,
-	"Номер команды"	INTEGER DEFAULT NULL,
-	FOREIGN KEY("Номер команды") REFERENCES "Teams"("Номер команды") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("ID Участника" AUTOINCREMENT)
+	"Participant ID"	INTEGER NOT NULL,
+	"Participant surname"	varchar(100),
+	"Participant name"	varchar(100),
+	"Participant patronymic"	varchar(100),
+	"Birth date"	date,
+	"Place of study"	varchar(100),
+	"Place of work"	varchar(100),
+	"Participant email"	varchar(100) NOT NULL UNIQUE,
+	"Login"	varchar(100) NOT NULL UNIQUE,
+	"Password"	varchar(100) NOT NULL,
+	"Team number"	INTEGER,
+	FOREIGN KEY("Team number") REFERENCES "Teams"("Team number") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Participant ID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Participating_organizations" (
+	"Participating organization number"	INTEGER NOT NULL,
+	"Organization name"	varchar(100) NOT NULL UNIQUE,
+	"Manager surname"	varchar(100) NOT NULL,
+	"Manager name"	varchar(100) NOT NULL,
+	"Manager patronymic"	varchar(100),
+	"Organization email"	varchar(100) UNIQUE,
+	"Link to organization website"	varchar(100) UNIQUE,
+	"Letter number"	INTEGER NOT NULL UNIQUE,
+	"What can provide"	varchar(100),
+	FOREIGN KEY("Letter number") REFERENCES "Invited_organizations"("Letter number") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Participating organization number" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "Problem_solution" (
-	"Порядок оценивания"	INTEGER NOT NULL,
-	"Этап"	INTEGER NOT NULL,
-	"Номер команды"	INTEGER NOT NULL,
-	"Номер задачи"	INTEGER NOT NULL,
-	"Время начала"	NUMERIC NOT NULL,
-	"Результат этапа"	TEXT NOT NULL,
-	"Экспертная оценка"	INTEGER NOT NULL,
-	"Результирующая оценка"	INTEGER NOT NULL,
-	"Хранилище решения (ссылка)"	TEXT NOT NULL,
-	FOREIGN KEY("Номер задачи") REFERENCES "Tasks"("Номер задачи") ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY("Номер команды") REFERENCES "Teams"("Номер команды") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("Порядок оценивания" AUTOINCREMENT)
+	"Evaluation procedure"	INTEGER NOT NULL,
+	"Stage"	varchar(100) NOT NULL,
+	"Team number"	INTEGER NOT NULL,
+	"Task number"	INTEGER NOT NULL,
+	"Start time"	datetime NOT NULL,
+	"Stage result"	varchar(100) NOT NULL,
+	"Expert review"	INTEGER NOT NULL,
+	"Resulting score"	INTEGER NOT NULL,
+	"Solution repository (link)"	varchar(100) NOT NULL,
+	FOREIGN KEY("Task number") REFERENCES "Tasks"("Task number") ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY("Team number") REFERENCES "Teams"("Team number") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Evaluation procedure" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "Representatives_organizations" (
-	"ID Представителя организации"	INTEGER NOT NULL,
-	"Фамилия представителя организации"	TEXT NOT NULL,
-	"Имя представителя организации"	TEXT NOT NULL,
-	"Отчество представителя организации"	TEXT DEFAULT NULL,
-	"Электронная почта представителя организации"	TEXT NOT NULL UNIQUE,
-	"Номер организации"	INTEGER NOT NULL,
-	"Должность"	TEXT DEFAULT NULL,
-	"Статус на мероприятии"	TEXT DEFAULT NULL,
-	FOREIGN KEY("Номер организации") REFERENCES "Participating_organizations"("Номер организации_участника") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("ID Представителя организации" AUTOINCREMENT)
+	"Organization Representative ID"	INTEGER NOT NULL,
+	"Organization representative surname"	varchar(100) NOT NULL,
+	"Organization representative name"	varchar(100) NOT NULL,
+	"Organization representative patronymic"	varchar(100),
+	"Organization representative email"	varchar(100) NOT NULL UNIQUE,
+	"Organization number"	INTEGER NOT NULL,
+	"Post"	varchar(100),
+	"Status at the event"	varchar(100),
+	FOREIGN KEY("Organization number") REFERENCES "Participating_organizations"("Participating organization number") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Organization Representative ID" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "Tasks" (
-	"Номер задачи"	INTEGER NOT NULL,
-	"Категория"	TEXT NOT NULL,
-	"Номер организации_участника"	INTEGER NOT NULL,
-	"Ссылка на текст задания"	TEXT DEFAULT NULL,
-	FOREIGN KEY("Номер организации_участника") REFERENCES "Participating_organizations"("Номер организации_участника") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("Номер задачи" AUTOINCREMENT)
+	"Task number"	INTEGER NOT NULL,
+	"Category"	varchar(100) NOT NULL,
+	"Participating organization number"	INTEGER NOT NULL,
+	"Link to the task text"	varchar(100),
+	FOREIGN KEY("Participating organization number") REFERENCES "Participating_organizations"("Participating organization number") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Task number" AUTOINCREMENT)
 );
 CREATE TABLE IF NOT EXISTS "Teams" (
-	"Номер команды"	INTEGER NOT NULL,
-	"Название команды"	TEXT NOT NULL,
-	"Номер задачи"	INTEGER DEFAULT NULL UNIQUE,
-	"Номер модератора"	INTEGER DEFAULT NULL UNIQUE,
-	FOREIGN KEY("Номер модератора") REFERENCES "Moderators"("ID Модератора") ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY("Номер задачи") REFERENCES "Tasks"("Номер задачи") ON DELETE CASCADE ON UPDATE CASCADE,
-	PRIMARY KEY("Номер команды" AUTOINCREMENT)
+	"Team number"	INTEGER NOT NULL,
+	"Team name"	varchar(100) NOT NULL UNIQUE,
+	"Task number"	INTEGER,
+	"Moderator number"	INTEGER,
+	FOREIGN KEY("Task number") REFERENCES "Tasks"("Task number") ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY("Moderator number") REFERENCES "Moderators"("Moderator ID") ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY("Team number" AUTOINCREMENT)
 );
 COMMIT;

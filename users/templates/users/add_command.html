@@ -1,39 +1,45 @@
-{% extends 'hackaton/layout.html' %}
+{% extends 'users/profile.html' %}
 {% load static %}
-{% block main %}
-    <!-- Custom styles for this template -->
-    <link href="{% static 'hackaton/signin.css' %}" rel="stylesheet">
-  </head>
-  <body class="text-center">
-    
-<main class="form-signin">
-  <div>
-    <img class="mb-4" src="../../static/hackaton/logo.jpg" alt="" width=50% height=50%>
-    <h1 class="h3 mb-3 fw-normal">Создание команды</h1>
-  </div>
 
-  <form id="form-container" action="{% url 'users:command' %}" method="post">
-    {% csrf_token %}
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingName" placeholder="command name">
-      <label for="floatingName">Название команды(необязательно)</label>
-    </div>
+{% block body %}
 
-    <div class="form-floating" id="form-nick">
-      <input type="text" class="form-control" name="name-0" id="form-name-0" placeholder="count">
-      <label for="form-name-0">nickname участника</label>
-    </div>
+<div class="container">
+        <div class="row">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
 
-    <div>
-      <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
-    </div>
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+                     <form id="form-container" action="{% url 'users:command' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-floating">
+                          <input type="text" class="form-control" name="team" id="floatingName" placeholder="team name">
+                          <label for="floatingName">Название команды(необязательно)</label>
+                        </div>
 
-    <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
-    <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
-    <p class="mt-5 mb-3 text-muted">NordHack</p>
-  </form>
+                        <div class="form-floating" id="form-nick">
+                          <input type="text" class="form-control" name="name" id="form-name_0" placeholder="count">
+                          <label for="form-name_0">nickname участника</label>
+                        </div>
+
+                        <div>
+                            <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
+                            <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
+                        </div>
+                        {% for team in teams %}
+                            <p>{{ team.name }}</p>
+                        {% endfor %}
+                        <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
+                        <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+</div>
+
    <script>
+
         let nickForm = document.querySelectorAll("#form-nick")
         let container = document.querySelector("#form-container")
         let addButton = document.querySelector("#add-form")
@@ -49,10 +55,10 @@
 
             if (totalForms.getAttribute('value') < 4){
                 let newForm = nickForm[0].cloneNode(true)
-                let formRegex = RegExp(`name-(\\d){1}`,'g')
+                let formRegex = RegExp(`name_(\\d){1}`,'g')
 
                 formNum++
-                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name-${formNum}`)
+                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name_${formNum}`)
                 container.insertBefore(newForm, addButton)
                 totalForms.setAttribute('value', `${formNum+1}`)
             }
@@ -62,8 +68,8 @@
             e.preventDefault()
 
             if (totalForms.getAttribute('value') > 1){
-                let form = document.querySelector(`#form-name-${formNum}`)
-                let form1 = document.querySelector(`#form-name-${formNum}`)
+                let form = document.querySelector(`#form-name_${formNum}`)
+                let form1 = document.querySelector(`#form-name_${formNum}`)
                 form.parentElement.remove()
                 form1.parentElement.remove()
                 formNum--
@@ -71,9 +77,5 @@
             }
         }
     </script>
-</main>
 
-
-
-  </body>
 {% endblock %}

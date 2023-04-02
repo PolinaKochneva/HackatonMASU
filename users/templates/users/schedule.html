@@ -1,0 +1,104 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+
+    {% block body %}
+<!-- Start Pricing Table Area -->
+<section id="pricing" class="pricing-table section extra-page bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <div class="section-title">
+            <h3 class="wow zoomIn" data-wow-delay=".2s">NordHack-2019</h3>
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">Расписание хакатона</h2>
+            <p class="wow fadeInUp" data-wow-delay=".6s"></p>
+          </div>
+      </div>
+  </div>
+      <div class="row">
+          <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".4s">
+              <!-- Single Table -->
+              <div class="single-table">
+                  <!-- Table Head -->
+                  <div class="table-head">
+                      <p>День первый</p>
+                      <div class="price">
+                          <h2 class="amount">20 ноября</h2>
+                      </div>
+                  </div>
+                  <!-- End Table Head -->
+                  <div class="button">
+                      <a href="{% url 'hackaton:day1' %}" class="btn">Подробное расписание</a>
+                  </div>
+                  <!-- Start Table Content -->
+                  <div class="table-content">
+                      <!-- Table List -->
+                      <ul class="table-list">
+                          <li>Формирование команд</li>
+                          <li>Анализ заданий</li>
+                      </ul>
+                      <!-- End Table List -->
+                  </div>
+                  <!-- End Table Content -->
+              </div>
+              <!-- End Single Table-->
+          </div>
+          <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".6s">
+              <!-- Single Table -->
+              <div class="single-table middle">
+                  <!-- Table Head -->
+                  <div class="table-head">
+                      <p>День второй</p>
+                      <div class="price">
+                          <h2 class="amount">21 ноября</h2>
+                      </div>
+                  </div>
+                  <!-- End Table Head -->
+                  <div class="button">
+                      <a href="{% url 'hackaton:day2' %}" class="btn btn-alt">Подробное расписание</a>
+                  </div>
+                  <!-- Start Table Content -->
+                  <div class="table-content">
+                      <!-- Table List -->
+                      <ul class="table-list">
+                          <li>Практическое решение задачи</li>
+                          <li>Демонстрация прототипов</li>
+                      </ul>
+                      <!-- End Table List -->
+                  </div>
+                  <!-- End Table Content -->
+              </div>
+              <!-- End Single Table-->
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-12 wow fadeInUp" data-wow-delay=".8s">
+              <!-- Single Table -->
+              <div class="single-table">
+                  <!-- Table Head -->
+                  <div class="table-head">
+                      <p>День третий</p>
+                      <div class="price">
+                          <h2 class="amount">22 ноября</h2>
+                      </div>
+                  </div>
+                  <!-- End Table Head -->
+                  <div class="button">
+                      <a href="{% url 'hackaton:day3' %}" class="btn">Подробное расписание</a>
+                  </div>
+                  <!-- Start Table Content -->
+                  <div class="table-content">
+                      <!-- Table List -->
+                      <ul class="table-list">
+                          <li>Доработка задач</li>
+                          <li>Презентация продукта</li>
+                      </ul>
+                      <!-- End Table List -->
+                  </div>
+                  <!-- End Table Content -->
+              </div>
+              <!-- End Single Table-->
+          </div>
+      </div>
+  </div>
+</section>
+<!--/ End Pricing Table Area -->
+{% endblock %}

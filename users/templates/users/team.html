@@ -1,0 +1,101 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="main-text">
+    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+      <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+        <span class="fs-5 fw-semibold">{{ user.memberteam.team }}</span>
+      </a>
+      <div class="list-group list-group-flush border-bottom scrollarea">
+        {% for member in members %}
+
+          <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+              <strong class="mb-1">{{ member }} </strong>
+              <small>{{ forloop.counter }}</small>
+            </div>
+            </a>
+        {% endfor %}
+        <div class="main-text">
+          <button id="add_member" class="btn btn-lg btn-primary fw-bold border-secondary bg-primary text-white" type="button">Добавить участника</button>
+          <button id="del_member" class="btn btn-lg btn-primary fw-bold border-secondary bg-primary text-white" type="button">Удалить участника</button>
+          <a href="{% url 'users:del_command' %}" class="btn btn-lg btn-secondary fw-bold border-danger bg-danger text-white">Удалить себя</a>
+
+        </div>
+
+          {% include 'users/add_member_widget.html' %}
+
+          {% include 'users/del_member_widget.html' %}
+
+        </div>
+    </div>
+  </div>
+</div>
+
+
+   <script>
+        var bg = document.querySelector('.bg-blackout')
+        var addwidget = document.querySelector('#add_member_widget');
+        var delwidget = document.querySelector('#del_member_widget');
+        var addmember = document.querySelector('#add_member');
+        var delmember = document.querySelector('#del_member');
+
+       addmember.addEventListener('click', function() {
+          bg.style.display = 'block';
+          addwidget.style.display = 'block';
+        });
+
+        delmember.addEventListener('click', function() {
+          bg.style.display = 'block';
+          delwidget.style.display = 'block';
+        });
+        bg.addEventListener('click', function() {
+          bg.style.display = 'none';
+          addwidget.style.display = 'none';
+          delwidget.style.display = 'none';
+        });
+
+
+        let nickForm = document.querySelectorAll("#form-nick")
+        let container = document.querySelector("#form-container")
+        let addButton = document.querySelector("#add-form")
+        let delButton = document.querySelector("#del-form")
+        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+        let formNum = nickForm.length-1
+
+        addButton.addEventListener('click', addForm)
+        delButton.addEventListener('click', delForm)
+
+        function addForm(e){
+           e.preventDefault()
+
+            if (totalForms.getAttribute('value') < (5 - {{ members.count }})){
+                let newForm = nickForm[0].cloneNode(true)
+                let formRegex = RegExp(`name_(\\d){1}`,'g')
+
+                formNum++
+                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name_${formNum}`)
+                container.insertBefore(newForm, addButton)
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+
+        function delForm(e){+
+            e.preventDefault()
+
+            if (totalForms.getAttribute('value') > 1){
+                let form = document.querySelector(`#form-name_${formNum}`)
+                let form1 = document.querySelector(`#form-name_${formNum}`)
+                form.parentElement.remove()
+                form1.parentElement.remove()
+                formNum--
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+
+   </script>
+
+{% endblock %}

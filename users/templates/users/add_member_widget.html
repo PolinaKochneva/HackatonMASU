@@ -1,0 +1,31 @@
+{% load static %}
+
+<div id="add-bg" class="bg-blackout">
+        </div>
+<div id="add_member_widget" class="widget">
+
+        <div class="single-featuer">
+        <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+        <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+         <form id="form-container" action="{% url 'users:add_member' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-floating" id="form-nick">
+              <input type="text" class="form-control" name="name" id="form-name_0" placeholder="count">
+              <label for="form-name_0">nickname участника</label>
+            </div>
+
+            <div>
+                <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
+                <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
+            </div>
+            {% for team in teams %}
+                <p>{{ team.name }}</p>
+            {% endfor %}
+            <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
+            <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+          </form>
+        </div>
+    </div>
+

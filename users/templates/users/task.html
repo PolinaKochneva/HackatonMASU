@@ -1,0 +1,17 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+
+    {% block body %}
+
+          <div class="main-text">
+              <div>
+                               <h1>Категория:</h1>
+                  <p>{{ request.user.memberteam.team.task_id.category }}</p>
+              </div>
+            <div>
+              <h4>Цель задания:</h4>
+              <p>{{ request.user.memberteam.team.task_id }}</p>
+            </div>
+
+          </div>
+{% endblock %}

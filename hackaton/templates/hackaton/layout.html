@@ -39,7 +39,11 @@
     <link rel="stylesheet" href="{% static 'hackaton/css/animate.css' %}" />
     <link rel="stylesheet" href="{% static 'hackaton/css/tiny-slider.css' %}" />
     <link rel="stylesheet" href="{% static 'hackaton/css/glightbox.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'hackaton/css/main.css' %}" />
+    {% if request.resolver_match.app_name == 'users' or request.resolver_match.url_name == 'polozhenie_nordhack' or request.resolver_match.url_name == 'day1' or request.resolver_match.url_name == 'day2' or request.resolver_match.url_name == 'day3' %}
+        <link rel="stylesheet" href="{% static 'hackaton/css/main1.css' %}" />
+    {% else %}
+        <link rel="stylesheet" href="{% static 'hackaton/css/main.css' %}" />
+    {% endif %}
 </head>
 <!-- Start Header Area -->
 <header class="header navbar-area">
@@ -97,6 +101,7 @@
                                        aria-label="Toggle navigation">Личный кабинет</a>
                                 </li>
                             </ul>
+
                         </div> <!-- navbar collapse -->
                         {% if request.resolver_match.url_name != 'registration' and not request.user.is_authenticated %}
                         <div class="button">
@@ -123,7 +128,7 @@
             <li class="nav-item"><a href="{% url 'hackaton:partners' %}" class="nav-link px-4 text-muted">Партнеры</a></li>
             <li class="nav-item"><a href="{% url 'hackaton:info' %}" class="nav-link px-4 text-muted">Информация</a></li>
             <li class="nav-item"><a href="{% url 'users:profile' %}" class="nav-link px-4 text-muted">Личный кабинет</a></li>
-            <li class="nav-item"><a href="polozhenie_nordhack.pdf" class="nav-link px-4 text-muted">Положение о соревновании</a></li>
+            <li class="nav-item"><a href="{% url 'hackaton:polozhenie_nordhack' %}" class="nav-link px-4 text-muted">Положение о соревновании</a></li>
         </ul>
         <p class="text-center text-muted">2023 Мурманский Арктический государственный университет</p>
     </footer>

@@ -886,7 +886,10 @@ body {
    width: 700px; /* тут тоже изменяешь до получения нужного результата*/
 
  }
-
+.main-doc {
+   width: 100%; /* тут тоже изменяешь до получения нужного результата*/
+    height: 85vh;
+ }
 .main-img {
     padding: 25px;
     border-radius: 8px;
@@ -897,4 +900,30 @@ body {
 
 .main-img img {
    width: 350px; /*ширина для самой картинки*/
+}
+
+.bg-blackout {
+    position: absolute;
+    background-color: #1b1b1b;
+    width: 100%;
+    height: 100%;
+      top: 50%;
+  left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 80%;
+    z-index: 9;
+    border-radius: 0px;
+
+    display: none;
+}
+.widget {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+    z-index: 10;
+    opacity: 100%;
+  /* Другие стили для вашего виджета */
 }

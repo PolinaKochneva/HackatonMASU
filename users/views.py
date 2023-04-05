@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from .forms import LoginForm, RegForm, UserInfoForm, TeamForm, TeamMemberForm, MemberFormset
-from .models import Teams, MemberTeam, Profile
+from .models import Teams, MemberTeam, Profile, Tasks
 
 # Create your views here.
 def profile(request):
@@ -142,6 +142,8 @@ def register(request):
         'message':'Invalid form',
     })
 
+
+
 def update_user_info(request):
     if request.method == 'POST' and request.user.is_authenticated:
 
@@ -209,5 +211,22 @@ def schedule(request):
     return render(request, 'users/schedule.html',)
 
 def task(request):
-    return render(request, 'users/task.html', )
+    if request.user.memberteam.team.task_id:
+        return render(request, 'users/user_task.html', {
+            'link':request.user.memberteam.team.task_id.link_to_the_task_text
+        })
+    else:
+        return render(request, 'users/tasks.html', )
 
+def new_task(request):
+    team = request.user.memberteam.team
+    task = Tasks.objects.get(link_to_the_task_text=request.POST['link'])
+    team.task_id = task
+    team.save()
+    return HttpResponseRedirect(reverse('users:task'))
+
+def change_task(request):
+    team = request.user.memberteam.team
+    team.task_id = None
+    team.save()
+    return HttpResponseRedirect(reverse('users:task'))

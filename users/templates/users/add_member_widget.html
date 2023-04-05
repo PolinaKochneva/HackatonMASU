@@ -1,6 +1,6 @@
 {% load static %}
 
-<div id="add-bg" class="bg-blackout">
+<div id="add-bg" class="bg-blackout" style="width: 100%;">
         </div>
 <div id="add_member_widget" class="widget">
 
@@ -19,9 +19,6 @@
                 <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
                 <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
             </div>
-            {% for team in teams %}
-                <p>{{ team.name }}</p>
-            {% endfor %}
             <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
             <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
@@ -29,3 +26,44 @@
         </div>
     </div>
 
+<script>
+         let nickForm = document.querySelectorAll("#form-nick")
+        let formNum = nickForm.length-1
+
+        let container = document.querySelectorAll("#form-container")[0]
+        let addButton = document.querySelectorAll("#add-form")[0]
+        let delButton = document.querySelectorAll("#del-form")[0]
+        let totalForms = document.querySelectorAll("#id_form-TOTAL_FORMS")[0]
+
+
+
+        addButton.addEventListener('click', addForm)
+        delButton.addEventListener('click', delForm)
+
+        function addForm(e){
+           e.preventDefault()
+
+            if (totalForms.getAttribute('value') < (5 - {{ members.count }})){
+                let newForm = nickForm[0].cloneNode(true)
+                let formRegex = RegExp(`name_(\\d){1}`,'g')
+
+                formNum++
+                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name_${formNum}`)
+                container.insertBefore(newForm, addButton)
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+
+        function delForm(e){+
+            e.preventDefault()
+
+            if (totalForms.getAttribute('value') > 1){
+                let form = document.querySelector(`#form-name_${formNum}`)
+                let form1 = document.querySelector(`#form-name_${formNum}`)
+                form.parentElement.remove()
+                form1.parentElement.remove()
+                formNum--
+                totalForms.setAttribute('value', `${formNum+1}`)
+            }
+        }
+</script>

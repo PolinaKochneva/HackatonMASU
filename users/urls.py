@@ -17,4 +17,6 @@ urlpatterns = [
     path("command", views.command, name='command'),
     path("schedule", views.schedule, name='schedule'),
     path("task", views.task, name='task'),
+    path("newTask", views.new_task, name='new_task'),
+    path("changeTask", views.change_task, name='change_task'),
 ]

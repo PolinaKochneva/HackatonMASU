@@ -107,7 +107,7 @@ class Tasks(models.Model):
     id = models.AutoField(db_column='Task number', primary_key=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     category = models.CharField(db_column='Category', max_length=100)  # Field name made lowercase.
     participating_organization_number = models.ForeignKey(ParticipatingOrganizations, models.DO_NOTHING, db_column='Participating organization number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    link_to_the_task_text = models.CharField(db_column='Link to the task text', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    link_to_the_task_text = models.CharField(db_column='Link to the task text', max_length=200, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     def __str__(self):
         return self.link_to_the_task_text
     class Meta:
@@ -118,7 +118,7 @@ class Tasks(models.Model):
 class Teams(models.Model):
     id = models.AutoField(db_column='Team number', primary_key=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     name = models.CharField(db_column='Team name', unique=True, max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    task_id = models.ForeignKey(Tasks, models.DO_NOTHING, db_column='Task number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    task_id = models.ForeignKey(Tasks, on_delete=models.DO_NOTHING, db_column='Task number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     moderator_id = models.ForeignKey(Moderators, models.DO_NOTHING, db_column='Moderator number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     def __str__(self):
         return self.name

@@ -1,0 +1,9 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+
+    {% block body %}
+    <div class="main-doc">
+      <iframe src={{link}} style="width: 100%; height: 100%; display: inline-block;" frameborder="0"></iframe>
+        <a href="{% url 'users:change_task' %}" class="w-150 btn btn-lg btn-primary" >Сменить задачу</a>
+        </div>
+{% endblock %}

@@ -59,42 +59,7 @@
         });
 
 
-        let nickForm = document.querySelectorAll("#form-nick")
-        let container = document.querySelector("#form-container")
-        let addButton = document.querySelector("#add-form")
-        let delButton = document.querySelector("#del-form")
-        let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
-        let formNum = nickForm.length-1
 
-        addButton.addEventListener('click', addForm)
-        delButton.addEventListener('click', delForm)
-
-        function addForm(e){
-           e.preventDefault()
-
-            if (totalForms.getAttribute('value') < (5 - {{ members.count }})){
-                let newForm = nickForm[0].cloneNode(true)
-                let formRegex = RegExp(`name_(\\d){1}`,'g')
-
-                formNum++
-                newForm.innerHTML = newForm.innerHTML.replace(formRegex, `name_${formNum}`)
-                container.insertBefore(newForm, addButton)
-                totalForms.setAttribute('value', `${formNum+1}`)
-            }
-        }
-
-        function delForm(e){+
-            e.preventDefault()
-
-            if (totalForms.getAttribute('value') > 1){
-                let form = document.querySelector(`#form-name_${formNum}`)
-                let form1 = document.querySelector(`#form-name_${formNum}`)
-                form.parentElement.remove()
-                form1.parentElement.remove()
-                formNum--
-                totalForms.setAttribute('value', `${formNum+1}`)
-            }
-        }
 
    </script>
 

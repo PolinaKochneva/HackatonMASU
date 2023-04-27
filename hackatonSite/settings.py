@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['projects.masu.edu.ru', '172.21.210.18', '127.0.0.1']
 INSTALLED_APPS = [
     'hackaton',
     'users',
+    'easy_pdf',
     'django_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'hackatonSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'hackaton.sqlite3',
     }
 }
 
@@ -108,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 

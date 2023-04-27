@@ -1,0 +1,95 @@
+{% extends 'users/profile.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="main-text">
+
+        <div class="main-text">
+                <!--Start Form-->
+            <p class="lead">  {{ message }}</p>
+      <div class="form-signin">
+         <form action="{% url 'users:update_user_info' %}" method="post">
+             {% csrf_token %}
+       <div class="form-floating mb-3">
+        <h4>Фамилия</h4>
+         <input type="text" value="{{ user.last_name }}" name="last_name" class="form-control" id="floatingInput">
+       </div>
+       <div class="form-floating mb-3">
+        <h4>Имя</h4>
+         <input type="text" value="{{ user.first_name }}" name="first_name" class="form-control" id="floatingInput" >
+       </div>
+
+       <div class="form-floating mb-3">
+        <h4>Отчество</h4>
+         <input type="text" value="{{ user.profile.middle_name }}" name="middle_name" class="form-control" id="floatingInput" >
+       </div>
+       <div class="form-floating mb-3">
+       <h4>Дата рождения</h4>
+          <input type="date" value="{{ user.profile.birth_date|date:'Y-m-d' }}" name="birth_date" class="form-control" id="floatingInput">
+        </div>
+       <div class="form-floating mb-3">
+        <h4>Учебное заведение/Место работы</h4>
+         <input type="text" value="{{ user.profile.job }}" name="job" class="form-control" id="floatingInput">
+       </div>
+       <div class="form-floating mb-3">
+        <h4>Электронная почта</h4>
+          <input type="email" value="{{ user.email }}" name="mail" class="form-control" id="floatingInput" placeholder="name@example.com">
+        </div>
+       <div class="text-center">
+           <div>
+         <button id="add_hackaton" class="w-150 btn btn-lg btn-primary" type="button">Создать хакатон</button>
+          <button id="add_representative" class="w-150 btn btn-lg btn-primary" type="button">Добавить представителя</button>
+       <button id="update_date_hackathon" class="w-150 btn btn-lg btn-primary" type="button">Обновить дату Хакатона</button>
+        <a href="{% url 'admin:index' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Работа с БД</a>
+           </div>
+       <p class="lead">
+           <button class="w-150 btn btn-lg btn-primary" type="submit">Сохранить изменения</button>
+          <a href="{% url 'users:delete_user' %}" class="btn btn-lg btn-secondary fw-bold border-danger bg-danger text-white">Удалить себя</a>
+         <a href="{% url 'users:logout' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Выйти</a>
+
+       </p>
+           </div>
+     </form>
+</div>
+
+          {% include 'users/add_hackaton_widget.html' %}
+          {% include 'users/add_representatives_widget.html' %}
+            {% include 'users/update_hackathon_date_widget.html' %}
+
+</div>
+</div>
+
+   <script>
+        var bg = document.querySelector('.bg-blackout')
+        var add_hackaton_widget = document.querySelector('#add_hackaton_widget');
+        var add_representative_widget = document.querySelector('#add_representative_widget');
+        var update_date_hackathon_widget = document.querySelector('#update_date_hackathon_widget');
+        var add_hackaton = document.querySelector('#add_hackaton');
+        var add_representative = document.querySelector('#add_representative');
+        var update_date_hackathon = document.querySelector('#update_date_hackathon');
+
+       add_hackaton.addEventListener('click', function() {
+          bg.style.display = 'block';
+          add_hackaton_widget.style.display = 'block';
+        });
+
+        add_representative.addEventListener('click', function() {
+          bg.style.display = 'block';
+          add_representative_widget.style.display = 'block';
+        });
+        update_date_hackathon.addEventListener('click', function() {
+          bg.style.display = 'block';
+          update_date_hackathon_widget.style.display = 'block';
+        });
+        bg.addEventListener('click', function() {
+          bg.style.display = 'none';
+          addwidget.style.display = 'none';
+          delwidget.style.display = 'none';
+        });
+
+
+
+
+   </script>
+{% endblock %}

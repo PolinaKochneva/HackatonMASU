@@ -4,6 +4,7 @@
     {% block body %}
   <div class="main-text">
     <!--Start Form-->
+      <p class="lead">  {{ message }}</p>
       <div class="form-signin">
          <form action="{% url 'users:update_user_info' %}" method="post">
              {% csrf_token %}
@@ -45,22 +46,6 @@
 
 </div>
 
-<div class="container">
 
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-                        <h3>Сообщение об ошибках(!удалить!)</h3>
-                          <p class="lead">  {{ message }}}</p>
-
-                </div>
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-                        <h3>О вас</h3>
-                          <p class="lead">Здесь должна быть какая-то информация о пользователе</p>
-                </div>
-
-            </div>
         </div>
 {% endblock %}

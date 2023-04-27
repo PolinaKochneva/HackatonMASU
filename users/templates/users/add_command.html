@@ -4,6 +4,7 @@
 {% block body %}
 
 <div class="container">
+
         <div class="row">
             <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
 
@@ -26,13 +27,25 @@
                             <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
                             <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
                         </div>
-                        {% for team in teams %}
-                            <p>{{ team.name }}</p>
-                        {% endfor %}
+
                         <button id="add-form" class="w-100 btn btn-outline-success" type="button" style="margin-bottom: 5px; margin-top: 5px">Добавить участника</button>
                         <button id="del-form" class="w-100 btn btn-outline-danger" type="button" style="margin-bottom: 5px">Удалить участника</button>
                         <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
                       </form>
+                </div>
+            </div>
+        </div>
+
+         <div class="row">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay=".2s">
+
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+                    <h3>Команды, которые уже записались на участие</h3>
+                         {% for team in teams %}
+                            <p>{{ team.name }}</p>
+                        {% endfor %}
                 </div>
             </div>
         </div>

@@ -24,4 +24,14 @@ class TeamForm(forms.Form):
 class TeamMemberForm(forms.Form):
     name = forms.CharField()
 
+class HackathonForm(forms.Form):
+    name = forms.CharField()
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+    description = forms.CharField()
+
+class HackathonDateForm(forms.Form):
+    start_date = forms.DateField()
+    end_date = forms.DateField()
+
 MemberFormset = forms.formset_factory(TeamMemberForm, extra=1)

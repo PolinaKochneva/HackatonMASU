@@ -124,12 +124,8 @@ class ProblemSolution(models.Model):
 
 
 class RepresentativesOrganizations(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    surname = models.CharField(db_column='Surname', max_length=100)  # Field name made lowercase.
-    name = models.CharField(db_column='Name', max_length=100)  # Field name made lowercase.
-    patronymic = models.CharField(db_column='Patronymic', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    email = models.CharField(db_column='Email', unique=True, max_length=100)  # Field name made lowercase.
-    organization_number = models.ForeignKey(ParticipatingOrganizations, models.DO_NOTHING, db_column='Organization number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    organization_number = models.ForeignKey(ParticipatingOrganizations, models.DO_NOTHING, db_column='number', null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     post = models.CharField(db_column='Post', max_length=100, blank=True, null=True)  # Field name made lowercase.
     status_at_the_event = models.CharField(db_column='Status at the event', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
 

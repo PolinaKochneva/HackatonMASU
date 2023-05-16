@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.http import FileResponse
 from .forms import LoginForm, RegForm, UserInfoForm, TeamForm, TeamMemberForm, MemberFormset, HackathonForm, HackathonDateForm
-from .models import Teams, MemberTeam, Profile, Tasks, HackathonsRegulations, Hackathons
+from .models import Teams, MemberTeam, Profile, Tasks, HackathonsRegulations, Hackathons, Moderators, RepresentativesOrganizations
 
 
 # Create your views here.
@@ -99,7 +99,8 @@ def command(request):
                     if (not Teams.objects.filter(name=team_name)) \
                             and (users.count() == int(request.POST['form-TOTAL_FORMS']))\
                             and not all(MemberTeam.objects.filter(user=user) for user in users):
-                        team = Teams(name=team_name)
+                        team = Teams(name=team_name,
+                                     hackathon_number=Hackathons.objects.all()[0],)
                         team.save()
                         for user in users:
                             team_member = MemberTeam(team=team, user=user)

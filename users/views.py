@@ -5,8 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.http import FileResponse
-from .forms import LoginForm, RegForm, UserInfoForm, TeamForm, TeamMemberForm, MemberFormset, HackathonForm, HackathonDateForm
-from .models import Teams, MemberTeam, Profile, Tasks, HackathonsRegulations, Hackathons, Moderators, RepresentativesOrganizations
+from .forms import LoginForm, RegForm, UserInfoForm, TeamForm, TeamMemberForm, MemberFormset, HackathonForm, HackathonDateForm, AddRepresentativeForm, OrgForm, TaskForm
+from .models import Teams, MemberTeam, Profile, Tasks, HackathonsRegulations, Hackathons, Moderators, RepresentativesOrganizations, ParticipatingOrganizations
 
 
 # Create your views here.
@@ -15,6 +15,8 @@ def profile(request):
         return HttpResponseRedirect(reverse("users:login"))
     elif request.user.is_superuser:
         return render(request, "users/admin.html")
+    elif RepresentativesOrganizations.objects.filter(user=request.user):
+        return render(request, "users/representative_org.html")
     else:
         return render(request, "users/personal.html")
 
@@ -216,7 +218,8 @@ def delete_user(request):
 def schedule(request):
     if request.user.is_authenticated:
         return render(request, 'users/schedule.html',{
-            'timetable':HackathonsRegulations.objects.all()
+            'timetable':HackathonsRegulations.objects.all(),
+            'hackathon_date':Hackathons.objects.all()[0],
         })
     return render(request, "users/login.html")
 def task(request):
@@ -224,22 +227,29 @@ def task(request):
         if MemberTeam.objects.filter(user=request.user):
             if request.user.memberteam.team.task_id:
                 return render(request, 'users/user_task.html', {
-                    'link':request.user.memberteam.team.task_id.link_to_the_task_text
+                    'task':Tasks.objects.get(id=request.user.memberteam.team.task_id.id)
                 })
+            else:
+                return render(request, 'users/tasks.html', {
+            'tasks':Tasks.objects.all()
+        })
+
         else:
-            return render(request, 'users/tasks.html', )
+            return render(request, 'users/tasks.html', {
+                'tasks': Tasks.objects.all()
+            })
     return render(request, "users/login.html")
 
 def new_task(request):
     if request.user.is_authenticated:
         if MemberTeam.objects.filter(user=request.user):
             team = request.user.memberteam.team
-            task = Tasks.objects.get(link_to_the_task_text=request.POST['link'])
+            task = Tasks.objects.get(id=request.POST['task'])
             team.task_id = task
             team.save()
             return HttpResponseRedirect(reverse('users:task'))
         return render(request, "users/personal.html", {
-            'message': 'Соберите команду, чтобы выбрать команду',
+            'message': 'Соберите команду, чтобы выбрать задачу',
         })
     return render(request, "users/login.html")
 
@@ -291,18 +301,124 @@ def update_date_hackathon(request):
 #ДОДЕЛАТЬ!
 def add_representative(request):
     if request.user.is_authenticated and request.user.is_superuser:
-        if not Hackathons.objects.all() and request.method == 'POST':
-            form = HackathonForm(request.POST)
+        if request.method == 'POST':
+            form = AddRepresentativeForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                user = User.objects.get(username=cd['name'])
+                if not RepresentativesOrganizations.objects.filter(user=user):
 
+
+                    representative = RepresentativesOrganizations(user=user)
+
+                    representative.save()
+                    return HttpResponseRedirect(reverse("users:profile"))
+
+                return render(request, "users/representative_org.html", {
+                    'message': 'Пользователь уже является представителем некой организации',
+                })
+            return render(request, "users/representative_org.html", {
+                'message': 'Форма не валидна',
+            })
+        return render(request, "users/representative_org.html", {
+            'message': 'Форма не верна',
+        })
+    return render(request, "users/login.html")
+
+def add_org(request):
+    if request.user.is_authenticated and RepresentativesOrganizations.objects.filter(user=request.user):
+        if request.method == 'POST':
+            form = OrgForm(request.POST)
             if form.is_valid():
                 cd = form.cleaned_data
 
-                hackathon = Hackathons(name=cd['name'],
-                                        start_date=cd['start_date'],
-                                        end_date=cd['end_date'], )
+                if not ParticipatingOrganizations.objects.filter(organization_name=cd['org_name']):
 
-                hackathon.save()
-        return render(request, "users/admin.html", {
-            'message': 'Не может быть более двух Хакатонов одновременно',
+
+                    org = ParticipatingOrganizations(organization_name=cd['org_name'],
+                                                     manager=RepresentativesOrganizations.objects.get(user=request.user),
+                                                     email=cd['org_name'],
+                                                     link_to_organization_website=cd['link_to_organization_website'],
+                                                     what_can_provide=cd['what_can_provide'],
+                                                     hackathon_number=Hackathons.objects.all()[0])
+
+                    org.save()
+                    return HttpResponseRedirect(reverse("users:profile"))
+
+                return render(request, "users/representative_org.html", {
+                    'message': 'Организация уже зарегистрирована',
+                })
+            return render(request, "users/representative_org.html", {
+                'message': 'Форма не валидна',
+            })
+        return render(request, "users/representative_org.html", {
+            'message': 'Форма не верна',
+        })
+    return render(request, "users/login.html")
+
+def update_org(request):
+    if request.user.is_authenticated and RepresentativesOrganizations.objects.filter(user=request.user):
+        if request.method == 'POST':
+            form = OrgForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+
+                if ParticipatingOrganizations.objects.filter(organization_name=cd['org_name']):
+
+                    org = ParticipatingOrganizations.objects.get(manager=RepresentativesOrganizations.objects.get(user=request.user))
+
+                    if org.organization_name != cd['org_name']:
+                        org.organization_name = cd['org_name']
+
+                    if org.email != cd['email']:
+                        org.email = cd['email']
+
+                    if org.link_to_organization_website != cd['link_to_organization_website']:
+                        org.link_to_organization_website = cd['link_to_organization_website']
+
+                    if org.what_can_provide != cd['what_can_provide']:
+                        org.what_can_provide = cd['what_can_provide']
+
+                    org.save()
+                    return HttpResponseRedirect(reverse("users:profile"))
+
+                return render(request, "users/representative_org.html", {
+                    'message': 'Организация не зарегистрирована',
+                })
+            return render(request, "users/representative_org.html", {
+                'message': 'Форма не валидна',
+            })
+        return render(request, "users/representative_org.html", {
+            'message': 'Форма не верна',
+        })
+    return render(request, "users/login.html")
+
+def add_task(request):
+    if request.user.is_authenticated and RepresentativesOrganizations.objects.filter(user=request.user):
+        if request.method == 'POST':
+            form = TaskForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+
+                if not Tasks.objects.filter(purpose=cd['purpose']) and request.user.representativesorganizations.org:
+
+
+                    task = Tasks(participating_organization_number=ParticipatingOrganizations.objects.get(manager=request.user.representativesorganizations),
+                                 purpose=cd['purpose'],
+                                 description=cd['description'],
+                                 input_data=cd['input_data'],
+                                 hackathon_number=Hackathons.objects.all()[0])
+
+                    task.save()
+                    return HttpResponseRedirect(reverse("users:profile"))
+
+                return render(request, "users/representative_org.html", {
+                    'message': 'Задача уже создана либо вы не зарегистрировали организацию',
+                })
+            return render(request, "users/representative_org.html", {
+                'message': 'Форма не валидна',
+            })
+        return render(request, "users/representative_org.html", {
+            'message': 'Форма не верна',
         })
     return render(request, "users/login.html")

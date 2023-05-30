@@ -1,0 +1,31 @@
+{% load static %}
+
+<div id="add-bg" class="bg-blackout" style=" width: 150%; height: 250%" xmlns="http://www.w3.org/1999/html">
+        </div>
+<div id="add_task_widget" class="widget">
+
+        <div class="single-featuer">
+        <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+        <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+         <form id="form-container" action="{% url 'users:add_task' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-floating" id="form-purpose">
+              <input type="text" class="form-control" name="purpose" id="purpose" placeholder="count">
+              <label for="purpose">Цель</label>
+            </div>
+
+            <div class="form-floating" id="form-description">
+              <input type="text" class="form-control" name="description" id="description" placeholder="count">
+              <label for="description">Описание</label>
+            </div>
+
+              <div class="form-floating" id="form-input_data">
+              <input type="text" class="form-control" name="input_data" id="input_data" placeholder="count">
+              <label for="input_data">Входные данные</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Добавить задачу</button>
+          </form>
+        </div>
+    </div>

@@ -31,24 +31,6 @@ class HackathonsRegulations(models.Model):
         managed = True
         db_table = 'Hackathons Regulations'
 
-class InvitedOrganizations(models.Model):
-    letter_number = models.AutoField(db_column='Letter number', primary_key=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    organization_name = models.CharField(db_column='Organization name', unique=True, max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_surname = models.CharField(db_column='Manager surname', max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_name = models.CharField(db_column='Manager name', max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_patronymic = models.CharField(db_column='Manager patronymic', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    email = models.CharField(db_column='Email', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
-    letter_subject = models.CharField(db_column='Letter subject', max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    mailing_day = models.DateField(db_column='Mailing day')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    participant_yes_no_field = models.TextField(db_column='Participant (Yes/No)', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'. This field type is a guess.
-    hackathon_number = models.ForeignKey(Hackathons, models.DO_NOTHING, db_column='Hackathon number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-
-    def __str__(self):
-        return self.organization_name
-    class Meta:
-        managed = True
-        db_table = 'Invited_organizations'
-
 
 class Moderators(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
@@ -86,16 +68,31 @@ class Participants(models.Model):
         managed = True
         db_table = 'Participants'
 
+class RepresentativesOrganizations(models.Model):
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    post = models.CharField(db_column='Post', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    status_at_the_event = models.CharField(db_column='Status at the event', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    def __str__(self):
+        return self.user.username
+
+    def org(self):
+        if ParticipatingOrganizations.objects.filter(manager=self):
+            org = ParticipatingOrganizations.objects.get(manager=self)
+            return org
+        else:
+            return None
+    class Meta:
+        managed = True
+        db_table = 'Representatives_organizations'
 
 class ParticipatingOrganizations(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     organization_name = models.CharField(db_column='Organization name', unique=True, max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_surname = models.CharField(db_column='Manager surname', max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_name = models.CharField(db_column='Manager name', max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    manager_patronymic = models.CharField(db_column='Manager patronymic', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    description = models.CharField(db_column='Description',blank=True, null=True, max_length=1000)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    manager = models.ForeignKey(RepresentativesOrganizations, models.DO_NOTHING, null=True, db_column='Manager')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     email = models.CharField(db_column='Email', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
+    link_to_logo = models.CharField(db_column='Link to logo',blank=True, null=True, max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     link_to_organization_website = models.CharField(db_column='Link to organization website', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    letter_number = models.OneToOneField(InvitedOrganizations, models.DO_NOTHING, db_column='Letter number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     what_can_provide = models.CharField(db_column='What can provide', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     hackathon_number = models.ForeignKey(Hackathons, models.DO_NOTHING, db_column='Hackathon number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
@@ -123,26 +120,19 @@ class ProblemSolution(models.Model):
         db_table = 'Problem_solution'
 
 
-class RepresentativesOrganizations(models.Model):
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
-    organization_number = models.ForeignKey(ParticipatingOrganizations, models.DO_NOTHING, db_column='number', null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    post = models.CharField(db_column='Post', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    status_at_the_event = models.CharField(db_column='Status at the event', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
-    class Meta:
-        managed = True
-        db_table = 'Representatives_organizations'
 
 
 class Tasks(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    category = models.CharField(db_column='Category', max_length=100)  # Field name made lowercase.
     participating_organization_number = models.ForeignKey(ParticipatingOrganizations, models.DO_NOTHING, db_column='Participating organization number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    link_to_the_task_text = models.CharField(db_column='Link to the task text', max_length=100, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    purpose = models.CharField(db_column='Purpose', max_length=1000, null=True)
+    description = models.CharField(db_column='Description', max_length=1000, null=True)
+    input_data = models.CharField(db_column='Input data', max_length=200, null=True)
     hackathon_number = models.ForeignKey(Hackathons, models.DO_NOTHING, db_column='Hackathon number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
 
     def __str__(self):
-        return self.category
+        return self.purpose
     class Meta:
         managed = True
         db_table = 'Tasks'
@@ -151,7 +141,7 @@ class Tasks(models.Model):
 class Teams(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='Team name', unique=True, max_length=100)  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    number = models.ForeignKey(Tasks, models.DO_NOTHING, db_column='Task number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    task_id = models.ForeignKey(Tasks, models.DO_NOTHING, db_column='Task number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     moderator_number = models.ForeignKey(Moderators, models.DO_NOTHING, db_column='Moderator number', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     hackathon_number = models.ForeignKey(Hackathons, models.DO_NOTHING, db_column='Hackathon number')  # Field name made lowercase. Field renamed to remove unsuitable characters.
 

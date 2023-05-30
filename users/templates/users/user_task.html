@@ -2,10 +2,26 @@
 {% load static %}
 
     {% block body %}
-<div>
-    <div class="main-doc">
-      <iframe src='{{link}}' style="width: 100%; height: 100%;" frameborder="0"></iframe>
+<div class="container">
+            <div class="row">
+                <div class="col-lg-12 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                <div class="single-featuer">
+                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
+                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+
+                  <h3>{{ task.participating_organization_number }}</h3>
+                  <p>
+                    <b>Цель:</b> {{ task.purpose }}
+
+                  </p><br>
+
+                    <p><br><b>Описание:</b> {{ task.description|linebreaksbr }}<br>
+                   <br><b>Входные данные:</b> {{ task.input_data }}</p><br>
+                </div>
+                </div>
+            <a href="{% url 'users:change_task' %}" class="w-150 btn btn-lg btn-primary" style="display: inline-block;" >Сменить задачу</a>
+            </div>
         </div>
-        <a href="{% url 'users:change_task' %}" class="w-150 btn btn-lg btn-primary" style="display: inline-block;" >Сменить задачу</a>
-    </div>
+
+
 {% endblock %}

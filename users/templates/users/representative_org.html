@@ -38,10 +38,12 @@
         </div>
        <div class="text-center">
            <div>
-         <button id="add_hackaton" class="w-150 btn btn-lg btn-primary" type="button">Создать хакатон</button>
-          <button id="add_representative" class="w-150 btn btn-lg btn-primary" type="button">Добавить представителя</button>
-       <button id="update_date_hackathon" class="w-150 btn btn-lg btn-primary" type="button">Обновить дату Хакатона</button>
-        <a href="{% url 'admin:index' %}" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Работа с БД</a>
+               {% if request.user.representativesorganizations.org %}
+                  <button id="update_org" class="w-150 btn btn-lg btn-primary" type="button">Изменить данные организации</button>
+               {% else %}
+                   <button id="add_org" class="w-150 btn btn-lg btn-primary" type="button">Зарегистрировать организацию</button>
+               {% endif %}
+                    <button id="add_task" class="w-150 btn btn-lg btn-primary" type="button">Добавить задачу</button>
            </div>
        <p class="lead">
            <button class="w-150 btn btn-lg btn-primary" type="submit">Сохранить изменения</button>
@@ -52,41 +54,48 @@
            </div>
      </form>
 </div>
-
-          {% include 'users/add_hackaton_widget.html' %}
-          {% include 'users/add_representatives_widget.html' %}
-            {% include 'users/update_hackathon_date_widget.html' %}
-
+        {% if request.user.representativesorganizations.org %}
+            {% include 'users/update_org_widget.html' %}
+        {% else %}
+            {% include 'users/add_org_widget.html' %}
+        {% endif %}
+            {% include 'users/add_task_widget.html' %}
 </div>
 </div>
 
    <script>
         var bg = document.querySelector('.bg-blackout')
-        var add_hackaton_widget = document.querySelector('#add_hackaton_widget');
-        var add_representative_widget = document.querySelector('#add_representative_widget');
-        var update_date_hackathon_widget = document.querySelector('#update_date_hackathon_widget');
-        var add_hackaton = document.querySelector('#add_hackaton');
-        var add_representative = document.querySelector('#add_representative');
-        var update_date_hackathon = document.querySelector('#update_date_hackathon');
+        {% if request.user.representativesorganizations.org %}
+            var update_org_widget = document.querySelector('#update_org_widget');
+            var update_org = document.querySelector('#update_org');
+            update_org.addEventListener('click', function() {
+            bg.style.display = 'block';
+            update_org_widget.style.display = 'block';
+        });
+        {% else %}
+            var add_org_widget = document.querySelector('#add_org_widget');
+            var add_org = document.querySelector('#add_org');
+            add_org.addEventListener('click', function() {
+              bg.style.display = 'block';
+              add_org_widget.style.display = 'block';
+            });
+        {% endif %}
 
-       add_hackaton.addEventListener('click', function() {
-          bg.style.display = 'block';
-          add_hackaton_widget.style.display = 'block';
-        });
+            var add_task_widget = document.querySelector('#add_task_widget');
+            var add_task = document.querySelector('#add_task');
+            add_task.addEventListener('click', function() {
+              bg.style.display = 'block';
+              add_task_widget.style.display = 'block';
+            });
 
-        add_representative.addEventListener('click', function() {
-          bg.style.display = 'block';
-          add_representative_widget.style.display = 'block';
-        });
-        update_date_hackathon.addEventListener('click', function() {
-          bg.style.display = 'block';
-          update_date_hackathon_widget.style.display = 'block';
-        });
         bg.addEventListener('click', function() {
           bg.style.display = 'none';
-          add_hackaton_widget.style.display = 'none';
-          add_representative_widget.style.display = 'none';
-          update_date_hackathon_widget.style.display = 'none';
+      {% if request.user.representativesorganizations.org %}
+          update_org_widget.style.display = 'none';
+      {% else %}
+          add_org_widget.style.display = 'none';
+      {% endif %}
+            add_task_widget.style.display = 'none';
         });
 
 

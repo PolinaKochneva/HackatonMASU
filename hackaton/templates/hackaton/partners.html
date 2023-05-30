@@ -72,149 +72,34 @@
     <!-- /End Features Area -->
 
     <!-- Start Call Action Area -->
+{% for org in orgs %}
     <section class="call-action overlay style2">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-8 col-12">
                     <div class="inner-content">
                         <div class="text">
-                            <h2>Союз "Торгово-промышленная палата Мурманской области"</h2>
-                            <p>Основная цель ТПП МО - содействие развитию экономики Мурманской области,
-                              создания бизнес условия  для создания предприятий и стимулирования
-                              предпринимательской деятельности.</p>
+                            <h2>{{ org.organization_name }}</h2>
+                            <p>{{ org.description }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2">
                   <div class="inner-content">
-                      <div class="main-img"><img class="center-pic" width="300" height="300" src="{% static 'hackaton/images/logo_tpp.png' %}" alt="img"></div>
+                      <div class="main-img"><img class="center-pic" width="300" height="300" src="{{ org.link_to_logo }}" alt="img"></div>
                     </div>
               </div>
                 <div class="col-lg-4 col-md-4 col-8">
                     <div class="button">
-                        <a href="https://murmansk.tpprf.ru/ru/" class="btn">Перейти на сайт</a>
+                        <a href="{{ org.link_to_organization_website }}" class="btn">Перейти на сайт</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- End Call Action Area -->
     <div class="b-example-divider"></div>
-    <!-- Start Call Action Area -->
-    <section class="call-action overlay style2">
-      <div class="container">
-          <div class="row align-items-center">
-              <div class="col-lg-6 col-md-8 col-12">
-                  <div class="inner-content">
-                      <div class="text">
-                          <h2>Кольская ГМК</h2>
-                          <p>Кольская ГМК представляет собой горно-металлургическое производство по добыче
-                            сульфидных медно-никелевых руд и производству цветных металлов, является
-                            никелерафинировочным центром всего «Норникеля».</p>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-2">
-                <div class="inner-content">
-                    <div class="main-img"><img class="center-pic" width="300" height="300" src="{% static 'hackaton/images/logo_gmk.jpg' %}" alt="img"></div>
-                  </div>
-            </div>
-              <div class="col-lg-4 col-md-4 col-8">
-                  <div class="button">
-                      <a href="https://www.kolagmk.ru/" class="btn">Перейти на сайт</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <!-- End Call Action Area -->
-  <div class="b-example-divider"></div>
-    <!-- Start Call Action Area -->
-    <section class="call-action overlay style2">
-      <div class="container">
-          <div class="row align-items-center">
-              <div class="col-lg-6 col-md-8 col-12">
-                  <div class="inner-content">
-                      <div class="text">
-                          <h2>Морская арктическая геологоразведочная экспедиция</h2>
-                          <p>АО «Морская арктическая геологоразведочная экспедиция» — надежный
-                            партнер, способный предоставить качественные геолого-геофизические услуги на
-                            шельфе, в транзитной зоне и на суше.</p>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-2">
-                <div class="inner-content">
-                    <div class="main-img"><img class="center-pic" width="300" height="300" src="{% static 'hackaton/images/logo_mage.jpg' %}" alt="img"></div>
-                  </div>
-            </div>
-              <div class="col-lg-4 col-md-4 col-8">
-                  <div class="button">
-                      <a href="https://mage.ru/ru/" class="btn">Перейти на сайт</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <!-- End Call Action Area -->
-
-  <div class="b-example-divider"></div>
-  <!-- Start Call Action Area -->
-  <section class="call-action overlay style2">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-8 col-12">
-                <div class="inner-content">
-                    <div class="text">
-                        <h2>Центр консалтинговых проектов</h2>
-                        <p>Имеется обширный опыт реализации ИТ-проектов различного масштаба и отраслевой специфики, обладает широким спектром профессиональных компетенций в области использования прикладных инструментов для построения автоматизированных информационных систем, а также в области обучения и консультирования пользователей.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="inner-content">
-                  <div class="main-img"><img class="center-pic" width="300" height="300" src="{% static 'hackaton/images/logo_ckp.jpg' %}" alt="img"></div>
-                </div>
-          </div>
-            <div class="col-lg-4 col-md-4 col-8">
-                <div class="button">
-                    <a href="https://it-murman.ru/" class="btn">Перейти на сайт</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Call Action Area -->
-<div class="b-example-divider"></div>
-<!-- Start Call Action Area -->
-<section class="call-action overlay style2">
-  <div class="container">
-      <div class="row align-items-center">
-          <div class="col-lg-6 col-md-8 col-12">
-              <div class="inner-content">
-                  <div class="text">
-                      <h2>ГОБУ МРИБИ (бизнес-инкубатор)</h2>
-                      <p>Бизнес-инкубатор оказывает начинающим и потенциальным предпринимателям,
-                        консультации по  вопросам поддержки начинающих предпринимателей со стороны
-                        государства, содействуют в подготовке документации для получения финансовой
-                        поддержки (субсидий для начинающих предпринимателей), консультируют по 
-                        бухгалтерским и юридическим аспектам ведения бизнеса.</p>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="inner-content">
-                <div class="main-img"><img class="center-pic" width="300" height="300" src="{% static 'hackaton/images/logo_mribi.jpg' %}" alt="img"></div>
-              </div>
-        </div>
-          <div class="col-lg-4 col-md-4 col-8">
-              <div class="button">
-                  <a href="https://mribi.ru" class="btn">Перейти на сайт</a>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
-<!-- End Call Action Area -->
+{% endfor %}
 
     {% endblock %}

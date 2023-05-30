@@ -1,0 +1,46 @@
+{% load static %}
+
+<div id="add-bg" class="bg-blackout" style=" width: 150%; height: 250%" xmlns="http://www.w3.org/1999/html">
+        </div>
+<div id="update_org_widget" class="widget">
+
+        <div class="single-featuer">
+        <img class="shape" src="{% static 'hackaton/images/features/shape.svg'%}" alt="#">
+        <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
+         <form id="form-container" action="{% url 'users:add_org' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-floating" id="form-org_name">
+              <input type="text" class="form-control" value="{{ request.user.representativesorganizations.org.organization_name }}" name="org_name" id="org_name" placeholder="count">
+              <label for="org_name">Название организации</label>
+            </div>
+
+             <div class="form-floating" id="form-email">
+              <input type="email" class="form-control" value="{{ request.user.representativesorganizations.org.email }}" name="email" id="email" placeholder="count">
+              <label for="email">email</label>
+            </div>
+
+            <div class="form-floating" id="form-description">
+              <input type="text" class="form-control" value="{{ request.user.representativesorganizations.org.description }}" name="description" id="description" placeholder="count">
+              <label for="description">Описание организации</label>
+            </div>
+
+              <div class="form-floating" id="form-logo">
+              <input type="text" class="form-control" value="{{ request.user.representativesorganizations.org.link_to_logo }}" name="link_to_logo" id="logo" placeholder="count">
+              <label for="logo">Ссылка на лого организации</label>
+            </div>
+
+             <div class="form-floating" id="form-website">
+              <input type="text" class="form-control" value="{{ request.user.representativesorganizations.org.link_to_organization_website }}"  name="link_to_organization_website" id="website" placeholder="count">
+              <label for="website">Ссылка на сайт организации</label>
+            </div>
+
+             <div class="form-floating" id="form-provide">
+              <input type="text" class="form-control" value="{{ request.user.representativesorganizations.org.what_can_provide }}" name="what_can_provide" id="provide" placeholder="count">
+              <label for="provide">Что может предоставить</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Добавить представителя</button>
+          </form>
+        </div>
+    </div>

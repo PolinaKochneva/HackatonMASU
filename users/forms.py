@@ -34,4 +34,20 @@ class HackathonDateForm(forms.Form):
     start_date = forms.DateField()
     end_date = forms.DateField()
 
+class AddRepresentativeForm(forms.Form):
+    name = forms.CharField()
+
+class OrgForm(forms.Form):
+    org_name = forms.CharField()
+    description = forms.CharField()
+    email = forms.CharField()
+    link_to_logo = forms.CharField()
+    link_to_organization_website = forms.CharField()
+    what_can_provide = forms.CharField()
+
+class TaskForm(forms.Form):
+    purpose = forms.CharField()
+    description = forms.CharField()
+    input_data = forms.CharField()
+
 MemberFormset = forms.formset_factory(TeamMemberForm, extra=1)

@@ -9,143 +9,32 @@
         <div class="row">
             <div class="col-lg-12 wow fadeInUp" data-wow-delay=".2s">
 
+            {% for task in tasks %}
                 <div class="single-featuer">
                     <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
                     <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
 
-                    <h3>СЗФК. Визуализация.</h3>
-                    <p>
-                      <b>Цель:</b> создать приложение "Адресная книга" с возможностью задания местоположения сотрудников на карте предприятия.
-                    </p><br>
-                    <div class="text-center">
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                    </div>
-                </div>
-
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                    <h3>КолАтомЭнергоСбыт. Умный город. Визуализация.</h3>
-                    <p>
-                      <b>Цель:</b> Выполнить анализ данных и дать ответы на вопросы о наличии зависимостей в представленных данных, факторах влияющих на сверхнормативное потребление энергии, есть ли иные зависимости и т.п.
-                    </p><br>
-                    <div class="text-center">
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                    </div>
-                </div>
-
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                    <h3>СМНГФ. Визуалиация.</h3>
-                    <p>
-                      <b>Цель:</b> Написать программу для визуализации расчета длины 1 минуты дуги меридиана.
-                    </p><br>
-                    <div class="text-center">
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                    </div>
-                </div>
-
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                    <h3>МАГЭ. Визуалиация.</h3>
-                    <p>
-                      <b>Цель:</b> Сконфигурировать локальную сеть.
-                    </p><br>
-                    <div class="text-center">
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                    </div>
-                </div>
-
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                    <h3>Гейм Инсайт. Разработка игры.</h3>
-                    <p>
-                      <b>Цель:</b> Разработать игры в стиле artillery.
-                    </p><br>
-                    <div class="text-center">
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                      <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                    </div>
-                </div>
-
-                <div class="single-featuer">
-                    <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-                    <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                  <h3>МРИБИ. Умный город. Визуализация.</h3>
+                  <h3>{{ task.participating_organization_number }}</h3>
                   <p>
-                    <b>Цель:</b> Разработать онлайн-сервис для мониторинга и уведомления о состоянии заснеженности улиц и дворов г. Мурманска. Платформы: Android, IOS.
+                    <b>Цель:</b> {{ task.purpose }}
 
                   </p><br>
                   <div class="text-center">
-                    <button id="add_widget" class="w-150 btn btn-lg btn-primary" type="button">Подробнее</button>
-                      <button id="dell_widget" class="w-150 btn btn-lg btn-primary" type="button" style="display: none;">Скрыть</button>
+                    <button id="add_widget{{ forloop.counter }}" class="w-150 btn btn-lg btn-primary" type="button">Подробнее</button>
+                      <button id="dell_widget{{ forloop.counter }}" class="w-150 btn btn-lg btn-primary" type="button" style="display: none;">Скрыть</button>
                     <form action="{% url 'users:new_task' %}" method="post" style="display: inline">
                         {% csrf_token %}
-                        <input type="hidden" name="link" value="https://docs.google.com/document/d/e/2PACX-1vTsk8ooulpmcfqbOEp72kJsYKgJHcN_ybqJ42EUvG1u8RkvQV8D81Y16j2xI8jpMw/pub?embedded=true">
+                        <input type="hidden" name="task" value="{{ task.id }}">
                         <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
                     </form>
 
                   </div>
-                <div id="doc_widget" class="main-doc" style="display: none;">
-                    <iframe src="https://docs.google.com/document/d/e/2PACX-1vTsk8ooulpmcfqbOEp72kJsYKgJHcN_ybqJ42EUvG1u8RkvQV8D81Y16j2xI8jpMw/pub?embedded=true" style="width: 100%; height: 100%;" frameborder="0"></iframe>
-
+                <div id="doc_widget{{ forloop.counter }}" class="main-doc" style="height: auto; width: 100%; display: none;">
+                    <p><br><b>Описание:</b> {{ task.description|linebreaksbr }}<br>
+                   <br><b>Входные данные:</b> {{ task.input_data }}</p><br>
                 </div>
               </div>
-
-              <div class="single-featuer">
-            <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-            <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-                <h3>ММБИ. Визуализация.</h3>
-                <p>
-                  <b>Цель:</b> создание информационно-аналитического продукта в виде веб-приложения по данным рейсового отчёта – экспедиции на научно-исследовательском судне «Дальние Зеленцы».
-                </p><br>
-                <div class="text-center">
-                  <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                  <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-                </div>
-            </div>
-
-            <div class="single-featuer">
-            <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-            <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-              <h3>Северсталь. Большие данные. Визуализация.</h3>
-              <p>
-                <b>Цель:</b> на основе представленных данных (информация по ходимости шин, давление в шинах, скоростной режим самосвала, вес самосвала груженый и порожний, позиция установки колес) найти факторы, влияющие на ходимость шин.
-              </p><br>
-              <div class="text-center">
-                <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-                <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-              </div>
-          </div>
-
-          <div class="single-featuer">
-            <img class="shape" src="{% static 'hackaton/images/features/shape.svg' %}" alt="#">
-            <img class="shape2" src="{% static 'hackaton/images/features/shape2.svg' %}" alt="#">
-
-            <h3>МАГУ. МКЭИИТ. Информационная безопаность.</h3>
-            <p>
-              <b>Цель:</b> восстановить доступ к беспроводной сети, доступной вне предприятия.
-            </p><br>
-            <div class="text-center">
-              <button class="w-150 btn btn-lg btn-primary" type="submit">Подробнее</button>
-              <button class="w-150 btn btn-lg btn-primary" type="submit">Выбрать эту задачу</button>
-            </div>
-        </div>
-
+            {% endfor %}
 
            </div>
           </div>
@@ -154,23 +43,24 @@
 </div>
 
    <script>
-        var widget = document.querySelector('#doc_widget');
-        var addWidget = document.querySelector('#add_widget');
-        var dellWidget = document.querySelector('#dell_widget');
+       {% for task in tasks %}
+        var widget{{ forloop.counter }} = document.querySelector('#doc_widget{{ forloop.counter }}');
+        var addWidget{{ forloop.counter }} = document.querySelector('#add_widget{{ forloop.counter }}');
+        var dellWidget{{ forloop.counter }} = document.querySelector('#dell_widget{{ forloop.counter }}');
 
-       addWidget.addEventListener('click', function() {
-          widget.style.display = 'grid';
-          dellWidget.style.display = 'inline';
+       addWidget{{ forloop.counter }}.addEventListener('click', function() {
+          widget{{ forloop.counter }}.style.display = 'grid';
+          dellWidget{{ forloop.counter }}.style.display = 'inline';
 
-          addWidget.style.display = 'none';
+          addWidget{{ forloop.counter }}.style.display = 'none';
         });
 
-        dellWidget.addEventListener('click', function() {
-          widget.style.display = 'none';
-          dellWidget.style.display = 'none';
-          addWidget.style.display = 'inline';
+        dellWidget{{ forloop.counter }}.addEventListener('click', function() {
+          widget{{ forloop.counter }}.style.display = 'none';
+          dellWidget{{ forloop.counter }}.style.display = 'none';
+          addWidget{{ forloop.counter }}.style.display = 'inline';
         });
-
+        {% endfor %}
 
 
    </script>

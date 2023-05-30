@@ -21,4 +21,7 @@ urlpatterns = [
     path("changeTask", views.change_task, name='change_task'),
     path("newHackathon", views.new_hackathon, name='new_hackathon'),
     path("updateDateHackathon", views.update_date_hackathon, name='update_date_hackathon'),
+    path("add_representative", views.add_representative, name='add_representative'),
+    path("add_org", views.add_org, name='add_org'),
+    path("add_task", views.add_task, name='add_task'),
 ]

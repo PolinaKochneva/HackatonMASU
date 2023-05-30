@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'hackatonSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'hackaton.sqlite3',
+        'NAME': BASE_DIR / 'hackathon.sqlite3',
     }
 }
 

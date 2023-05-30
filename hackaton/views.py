@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import FileResponse, HttpResponse
 from os import path
 from django.conf import settings
-from users.models import Hackathons
+from users.models import Hackathons, ParticipatingOrganizations
 import pymorphy3
 from django.utils.translation import gettext as _
 
@@ -29,7 +29,9 @@ def index(request):
     })
 
 def partners(request):
-    return render(request, 'hackaton/partners.html')
+    return render(request, 'hackaton/partners.html', {
+        'orgs':ParticipatingOrganizations.objects.all(),
+    })
 
 def open_pdf(request):
 
